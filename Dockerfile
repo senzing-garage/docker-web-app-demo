@@ -22,14 +22,10 @@ RUN apt-get update \
       nodejs \
  && rm -rf /var/lib/apt/lists/*
 
-# Service exposed on port 8080.
-
-EXPOSE 8080
-
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-api-server "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
-COPY --from=senzing/sdk-components-example-web-app "/app/" "/app/"
+COPY --from=senzing/senzing-api-server:1.6.1 "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
+COPY --from=senzing/entity-search-web-app:1.0.0 "/app/" "/app/"
 
 # Install NPM program
 
@@ -38,7 +34,15 @@ WORKDIR /app
 RUN npm init -y \
  && npm install
 
+# Service exposed on port 80.
+
+EXPOSE 80
+
 # Runtime execution.
+
+ENV SENZING_API_SERVER_URL="http://localhost:8090"
+ENV SENZING_WEB_SERVER_PORT=80
+ENV SENZING_WEB_SERVER_API_PATH="/api"
 
 WORKDIR /app
 ENTRYPOINT ["/app/docker-entrypoint.sh", "java -jar senzing-api-server.jar" ]
