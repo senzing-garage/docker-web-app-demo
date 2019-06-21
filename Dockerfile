@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=senzing/senzing-base
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2019-05-01
+ENV REFRESHED_AT=2019-06-21
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
@@ -23,18 +23,18 @@ RUN apt-get update \
       nodejs \
  && rm -rf /var/lib/apt/lists/*
 
- RUN mkdir -p /var/log/supervisor
-
 # Copy files from other docker images.
 
 COPY --from=senzing/senzing-api-server:1.6.1     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
 COPY --from=senzing/entity-search-web-app:1.0.0  "/app/" "/app/"
+
+# Copy files from repository.
+
 COPY ./rootfs /
 
-# Install NPM program
+# Install NPM program.
 
 WORKDIR /app
-
 RUN npm init -y \
  && npm install
 
@@ -50,4 +50,4 @@ ENV SENZING_WEB_SERVER_API_PATH="/api"
 
 WORKDIR /app
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord --nodaemon"]
