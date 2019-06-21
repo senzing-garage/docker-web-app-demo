@@ -16,16 +16,20 @@ RUN apt-get update \
       apt-utils \
       curl \
       default-jdk \
+      supervisor \
  && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
  && apt-get -y install \
       build-essential \
       nodejs \
  && rm -rf /var/lib/apt/lists/*
 
+ RUN mkdir -p /var/log/supervisor
+
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-api-server:1.6.1 "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
-COPY --from=senzing/entity-search-web-app:1.0.0 "/app/" "/app/"
+COPY --from=senzing/senzing-api-server:1.6.1     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
+COPY --from=senzing/entity-search-web-app:1.0.0  "/app/" "/app/"
+COPY ./rootfs /
 
 # Install NPM program
 
@@ -45,5 +49,5 @@ ENV SENZING_WEB_SERVER_PORT=80
 ENV SENZING_WEB_SERVER_API_PATH="/api"
 
 WORKDIR /app
-ENTRYPOINT ["/app/docker-entrypoint.sh", "java -jar senzing-api-server.jar" ]
-CMD [""]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+CMD ["/usr/bin/supervisord"]
