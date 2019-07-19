@@ -10,13 +10,17 @@ LABEL Name="senzing/web-app-demo" \
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
 # Install packages via apt.
+# Note: There is a work-around for a lsb_release problem in the following RUN command.
 
 RUN apt-get update \
  && apt-get -y install \
+      apt-transport-https \
       apt-utils \
       curl \
       default-jdk \
       supervisor \
+ && apt-get -y install --reinstall lsb-release \
+ && ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python3.7/site-packages/lsb_release.py \
  && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
  && apt-get -y install \
       build-essential \
