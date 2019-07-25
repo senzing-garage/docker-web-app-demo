@@ -1,13 +1,17 @@
-ARG BASE_IMAGE=senzing/senzing-base:1.0.3
+ARG BASE_IMAGE=senzing/senzing-base:1.1.0
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2019-06-21
+ENV REFRESHED_AT=2019-07-23
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
-      Version="1.0.0"
+      Version="1.1.0"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
+
+# Run as "root" for system installation.
+
+USER root
 
 # Install packages via apt.
 # Note: There is a work-around for a lsb_release problem in the following RUN command.
@@ -46,6 +50,10 @@ RUN npm init -y \
 
 EXPOSE 80
 
+# FIXME: Make non-root container.
+
+# USER 1001
+
 # Runtime execution.
 
 ENV SENZING_API_SERVER_URL="http://localhost:8090"
@@ -53,5 +61,4 @@ ENV SENZING_WEB_SERVER_PORT=80
 ENV SENZING_WEB_SERVER_API_PATH="/api"
 
 WORKDIR /app
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
-CMD ["/usr/bin/supervisord --nodaemon"]
+CMD ["/usr/bin/supervisord", "--nodaemon"]
