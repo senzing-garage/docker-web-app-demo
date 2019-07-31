@@ -22,7 +22,20 @@ RUN apt-get update \
       apt-utils \
       curl \
       default-jdk \
+      fio \
+      htop \
+      iotop \
+      ipython \
+      itop \
+      less \
+      odbc-postgresql \
+      net-tools \
+      pstack \
+      python-pyodbc \
       supervisor \
+      unixodbc \
+      unixodbc-dev \
+      vim \
  && apt-get -y install --reinstall lsb-release \
  && ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python3.7/site-packages/lsb_release.py \
  && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
@@ -30,6 +43,17 @@ RUN apt-get update \
       build-essential \
       nodejs \
  && rm -rf /var/lib/apt/lists/*
+
+# Install packages via pip.
+
+RUN pip3 install \
+    csvkit \
+    fuzzywuzzy \
+    ptable \
+    pandas \
+    python-levenshtein \
+    pyodbc \
+    setuptools
 
 # Copy files from other docker images.
 
@@ -53,6 +77,12 @@ EXPOSE 80
 # FIXME: Make non-root container.
 
 # USER 1001
+
+# Set up user environment.
+
+RUN echo 'alias ll="ls -l"' >> ~/.bashrc; \
+    echo 'alias python="python3"' >> ~/.bashrc; \
+    echo 'alias pip="pip3"' >> ~/.bashrc;
 
 # Runtime execution.
 
