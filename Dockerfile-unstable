@@ -3,7 +3,7 @@ FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2019-07-23
 
-LABEL Name="senzing/web-app-demo" \
+LABEL Name="senzing/web-app-demo-unstable" \
       Maintainer="support@senzing.com" \
       Version="1.1.0"
 
