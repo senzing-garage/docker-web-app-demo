@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzing-base:1.1.0
+ARG BASE_IMAGE=senzing/senzing-base:1.2.1
 FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2019-07-23
@@ -57,8 +57,8 @@ RUN pip3 install \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-api-server:1.6.1     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
-COPY --from=senzing/entity-search-web-app:1.0.0  "/app/" "/app/"
+COPY --from=senzing/senzing-api-server:1.7.2     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
+COPY --from=senzing/entity-search-web-app:1.0.2  "/app/" "/app/"
 
 # Copy files from repository.
 
