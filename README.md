@@ -251,7 +251,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 1. **Option #1:** Using `docker` command and GitHub.
 
     ```console
-    sudo docker build --tag senzing/resolver https://github.com/senzing/docker-web-app-demo.git
+    sudo docker build --tag senzing/web-app-demo https://github.com/senzing/docker-web-app-demo.git
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
