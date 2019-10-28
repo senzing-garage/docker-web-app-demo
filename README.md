@@ -198,7 +198,7 @@ Use if a different userid is required.
     sudo docker run \
       --detach \
       --name senzing-web-app-demo \
-      --publish 9002:80 \
+      --publish 8251:80 \
       --restart always \
       --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
@@ -207,7 +207,7 @@ Use if a different userid is required.
       senzing/web-app-demo
     ```
 
-1. "Entity Search Web App" can be viewed at [localhost:9002](http://localhost:9002), since 9002 was the published port.
+1. "Entity Search Web App" can be viewed at [localhost:8251](http://localhost:8251), since 8251 was the published port.
 
 1. To stop container. Example:
 
@@ -240,7 +240,7 @@ Use if a different userid is required.
       --detach \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
       --name senzing-web-app-demo \
-      --publish 9002:80 \
+      --publish 8251:80 \
       --restart always \
       --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
@@ -249,7 +249,7 @@ Use if a different userid is required.
       senzing/web-app-demo
     ```
 
-1. "Entity Search Web App" can be viewed at [localhost:9002](http://localhost:9002), since 9002 was the published port.
+1. "Entity Search Web App" can be viewed at [localhost:8251](http://localhost:8251), since 8251 was the published port.
 
 1. To stop container. Example:
 
