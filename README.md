@@ -140,6 +140,7 @@ Create a folder for each output directory.
 ### External database
 
 :thinking: **Optional:**  Use if storing data in an external database.
+If not specified, the internal SQLite database will be used.
 
 1. :pencil2: Specify database.
    Example:
@@ -196,49 +197,10 @@ Use if a different userid is required.
 
     ```console
     sudo docker run \
+      ${SENZING_RUNAS_USER_PARAMETER} \
+      ${SENZING_DATABASE_URL_PARAMETER} \
+      ${SENZING_NETWORK_PARAMETER} \
       --detach \
-      --name senzing-web-app-demo \
-      --publish 8251:80 \
-      --restart always \
-      --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
-      --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
-      --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
-      senzing/web-app-demo
-    ```
-
-1. "Entity Search Web App" can be viewed at [localhost:8251](http://localhost:8251), since 8251 was the published port.
-
-1. To stop container. Example:
-
-    ```console
-    sudo docker container kill senzing-web-app-demo
-    sudo docker container rm   senzing-web-app-demo
-    ```
-
-#### Demonstrate using PostgreSQL database
-
-1. :pencil2: Set environment variables.  Example:
-
-    ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
-    export DATABASE_HOST=my.postgresql.com
-    export DATABASE_PORT=5432
-    export DATABASE_DATABASE=G2
-
-    export SENZING_DIR=/opt/senzing
-    ```
-
-1. Run the docker container.  Example:
-
-    ```console
-    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
-
-    sudo docker run \
-      --detach \
-      --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
       --name senzing-web-app-demo \
       --publish 8251:80 \
       --restart always \
