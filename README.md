@@ -29,14 +29,17 @@ and visualize results with the "Entity Search Web App".
     1. [Configuration](#configuration)
     1. [Volumes](#volumes)
     1. [Docker network](#docker-network)
-    1. [External database](#external-database)
     1. [Docker user](#docker-user)
+    1. [External database](#external-database)
+    1. [Database support](#database-support)
     1. [Run docker container](#run-docker-container)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
+1. [Examples](#examples)
 1. [Errors](#errors)
+1. [References](#references)
 
 ## Expectations
 
@@ -46,7 +49,7 @@ This repository and demonstration require 6 GB free disk space.
 
 ### Time
 
-Budget 20 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 
 ### Background knowledge
 
@@ -76,10 +79,12 @@ Configuration values specified by environment variable or command line parameter
 
 ### Volumes
 
-The output of `yum install senzingapi` placed files in different directories.
-Create a folder for each output directory.
+:thinking:
+"[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/initialize-senzing-with-docker.md)"
+places files in different directories.
+The following examples show how to identify each output directory.
 
-1. :pencil2: Option #1.
+1. **Example #1:**
    To mimic an actual RPM installation,
    identify directories for RPM output in this manner:
 
@@ -90,7 +95,7 @@ Create a folder for each output directory.
     export SENZING_VAR_DIR=/var/opt/senzing
     ```
 
-1. :pencil2: Option #2.
+1. :pencil2: **Example #2:**
    If Senzing directories were put in alternative directories,
    set environment variables to reflect where the directories were placed.
    Example:
@@ -137,6 +142,33 @@ Create a folder for each output directory.
     export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
     ```
 
+### Docker user
+
+:thinking: **Optional:**  The docker container runs as "USER 1001".
+Use if a different userid (UID) is required.
+
+1. :pencil2: Manually identify user.
+   User "0" is root.
+   Example:
+
+    ```console
+    export SENZING_RUNAS_USER="0"
+    ```
+
+   Another option, use current user.
+   Example:
+
+    ```console
+    export SENZING_RUNAS_USER=$(id -u)
+    ```
+
+1. Construct parameter for `docker run`.
+   Example:
+
+    ```console
+    export SENZING_RUNAS_USER_PARAMETER="--user ${SENZING_RUNAS_USER}"
+    ```
+
 ### External database
 
 :thinking: **Optional:**  Use if storing data in an external database.
@@ -168,38 +200,25 @@ If not specified, the internal SQLite database will be used.
     export SENZING_DATABASE_URL_PARAMETER="--env SENZING_DATABASE_URL=${SENZING_DATABASE_URL}
     ```
 
-### Docker user
+### Database support
 
-:thinking: **Optional:**  The docker container runs as "USER 1001".
-Use if a different userid is required.
+:thinking: **Optional:**  Some database need additional support.
+For other databases, these steps may be skipped.
 
-1. :pencil2: Identify user.
-   User "0" is root.
-   Example:
-
-    ```console
-    export SENZING_RUNAS_USER="0"
-    ```
-
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_RUNAS_USER_PARAMETER="--user ${SENZING_RUNAS_USER}"
-    ```
+1. **Db2:** See
+   [Support Db2](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/support-db2.md)
+   instructions to set `SENZING_OPT_IBM_DIR_PARAMETER`.
+1. **MS SQL:** See
+   [Support MS SQL](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/support-mssql.md)
+   instructions to set `SENZING_OPT_MICROSOFT_DIR_PARAMETER`.
 
 ### Run docker container
-
-#### Demonstrate using SQLite database
 
 1. Run docker container.
    Example:
 
     ```console
     sudo docker run \
-      ${SENZING_RUNAS_USER_PARAMETER} \
-      ${SENZING_DATABASE_URL_PARAMETER} \
-      ${SENZING_NETWORK_PARAMETER} \
       --detach \
       --name senzing-web-app-demo \
       --publish 8251:80 \
@@ -208,6 +227,11 @@ Use if a different userid is required.
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
       --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
       --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
+      ${SENZING_RUNAS_USER_PARAMETER} \
+      ${SENZING_DATABASE_URL_PARAMETER} \
+      ${SENZING_NETWORK_PARAMETER} \
+      ${SENZING_OPT_IBM_DIR_PARAMETER} \
+      ${SENZING_OPT_MICROSOFT_DIR_PARAMETER} \
       senzing/web-app-demo
     ```
 
@@ -275,3 +299,5 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 ## Errors
 
 1. See [docs/errors.md](docs/errors.md).
+
+## References
