@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=senzing/senzing-base:1.2.1
+ARG BASE_IMAGE=senzing/senzing-base:1.3.0
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2019-07-23
+ENV REFRESHED_AT=2019-11-13
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
-      Version="1.1.0"
+      Version="1.1.1"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -57,8 +57,8 @@ RUN pip3 install \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-api-server:1.7.2     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
-COPY --from=senzing/entity-search-web-app:1.0.2  "/app/" "/app/"
+COPY --from=senzing/senzing-api-server:1.7.9     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
+COPY --from=senzing/entity-search-web-app:1.0.3  "/app/" "/app/"
 
 # Copy files from repository.
 
@@ -74,15 +74,9 @@ RUN npm init -y \
 
 EXPOSE 80
 
-# FIXME: Make non-root container.
+# Make non-root container.
 
 # USER 1001
-
-# Set up user environment.
-
-RUN echo 'alias ll="ls -l"' >> ~/.bashrc; \
-    echo 'alias python="python3"' >> ~/.bashrc; \
-    echo 'alias pip="pip3"' >> ~/.bashrc;
 
 # Runtime execution.
 
