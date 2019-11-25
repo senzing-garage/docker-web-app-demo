@@ -41,6 +41,14 @@ and visualize results with the "Entity Search Web App".
 1. [Errors](#errors)
 1. [References](#references)
 
+### Legend
+
+1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
+   Perhaps you'll need to make some choices.
+   Perhaps it's an optional step.
+1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
+1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
+
 ## Expectations
 
 ### Space
@@ -197,7 +205,7 @@ If not specified, the internal SQLite database will be used.
    Example:
 
     ```console
-    export SENZING_DATABASE_URL_PARAMETER="--env SENZING_DATABASE_URL=${SENZING_DATABASE_URL}
+    export SENZING_DATABASE_URL_PARAMETER="--env SENZING_DATABASE_URL=${SENZING_DATABASE_URL}"
     ```
 
 ### Database support
@@ -275,7 +283,9 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 1. **Option #1:** Using `docker` command and GitHub.
 
     ```console
-    sudo docker build --tag senzing/web-app-demo https://github.com/senzing/docker-web-app-demo.git
+    sudo docker build \
+      --tag senzing/web-app-demo \
+      https://github.com/senzing/docker-web-app-demo.git
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
