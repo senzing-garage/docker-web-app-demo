@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=senzing/senzing-base:1.3.0
+ARG BASE_IMAGE=senzing/senzing-base:1.4.0
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2019-11-13
+ENV REFRESHED_AT=2020-01-31
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
-      Version="1.1.1"
+      Version="1.2.0"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -36,8 +36,6 @@ RUN apt-get update \
       unixodbc \
       unixodbc-dev \
       vim \
- && apt-get -y install --reinstall lsb-release \
- && ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python3.7/site-packages/lsb_release.py \
  && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
  && apt-get -y install \
       build-essential \
@@ -57,8 +55,8 @@ RUN pip3 install \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-api-server:1.7.9     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
-COPY --from=senzing/entity-search-web-app:1.0.3  "/app/" "/app/"
+COPY --from=senzing/senzing-api-server:1.7.10    "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
+COPY --from=senzing/entity-search-web-app:1.0.4  "/app/" "/app/"
 
 # Copy files from repository.
 
