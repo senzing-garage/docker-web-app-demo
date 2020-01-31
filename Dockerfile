@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=senzing/senzing-base:1.4.0
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2020-01-29
+ENV REFRESHED_AT=2020-01-31
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
