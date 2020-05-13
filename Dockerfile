@@ -68,9 +68,15 @@ WORKDIR /app
 RUN npm init -y \
  && npm install
 
-# Service exposed on port 80.
+# Service exposed on port 8251.
 
-EXPOSE 80
+EXPOSE 8251
+
+# Temporary work around until the following is resolved:
+# https://github.com/Senzing/entity-search-web-app/issues/107
+
+RUN touch /app/proxy.conf.json \
+ && chmod 777 /app/proxy.conf.json
 
 # Make non-root container.
 
@@ -79,7 +85,7 @@ EXPOSE 80
 # Runtime execution.
 
 ENV SENZING_API_SERVER_URL="http://localhost:8090"
-ENV SENZING_WEB_SERVER_PORT=80
+ENV SENZING_WEB_SERVER_PORT=8251
 ENV SENZING_WEB_SERVER_API_PATH="/api"
 
 WORKDIR /app
