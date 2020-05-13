@@ -68,9 +68,15 @@ WORKDIR /app
 RUN npm init -y \
  && npm install
 
-# Service exposed on port 80.
+# Service exposed on port 8251.
 
-EXPOSE 80
+EXPOSE 8251
+
+# Temporary work around until the following is resolved:
+# https://github.com/Senzing/entity-search-web-app/issues/107
+
+RUN touch /app/proxy.conf.json \
+ && chmod 777 /app/proxy.conf.json
 
 # Make non-root container.
 
