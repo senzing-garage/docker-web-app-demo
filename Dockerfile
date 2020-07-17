@@ -1,11 +1,11 @@
 ARG BASE_IMAGE=senzing/senzing-base:1.5.1
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2020-07-08
+ENV REFRESHED_AT=2020-07-17
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
-      Version="1.3.0"
+      Version="2.0.0"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -55,8 +55,8 @@ RUN pip3 install \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-api-server:1.8.3     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
-COPY --from=senzing/entity-search-web-app:1.0.4  "/app/" "/app/"
+COPY --from=senzing/senzing-api-server:2.0.0     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
+COPY --from=senzing/entity-search-web-app:2.0.0  "/app/" "/app/"
 
 # Copy files from repository.
 
@@ -85,8 +85,11 @@ RUN touch /app/proxy.conf.json \
 # Runtime execution.
 
 ENV SENZING_API_SERVER_URL="http://localhost:8090"
-ENV SENZING_WEB_SERVER_PORT=8251
+ENV SENZING_WEB_SERVER_ADMIN_AUTH_MODE: 'JWT'
+ENV SENZING_WEB_SERVER_ADMIN_AUTH_PATH: 'http://localhost:8251'
 ENV SENZING_WEB_SERVER_API_PATH="/api"
+ENV SENZING_WEB_SERVER_PORT=8251
+ENV SENZING_WEB_SERVER_URL: "http://localhost:8251"
 
 WORKDIR /app
 CMD ["/usr/bin/supervisord", "--nodaemon"]

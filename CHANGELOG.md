@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2020-07-17
+
+### Changed in 2.0.0
+
+- Works with senzing versions 2.0.0 and above
+- Update to senzing/senzing-api-server:2.0.0
+- Update to senzing/entity-search-web-app:2.0.0
+- Added environment variables:
+    - `SENZING_WEB_SERVER_ADMIN_AUTH_MODE`
+    - `SENZING_WEB_SERVER_ADMIN_AUTH_PATH`
+    - `SENZING_WEB_SERVER_URL`
+
 ## [1.3.0] - 2020-07-08
 
 ### Changed in 1.3.0
