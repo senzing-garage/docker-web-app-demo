@@ -68,8 +68,9 @@ WORKDIR /app
 RUN npm init -y \
  && npm install
 
-# Service exposed on port 8251.
+# Services exposed on port 8250 and 8251.
 
+EXPOSE 8250
 EXPOSE 8251
 
 # Temporary work around until the following is resolved:
@@ -84,12 +85,12 @@ RUN touch /app/proxy.conf.json \
 
 # Runtime execution.
 
-ENV SENZING_API_SERVER_URL="http://localhost:8090"
-ENV SENZING_WEB_SERVER_ADMIN_AUTH_MODE: 'JWT'
-ENV SENZING_WEB_SERVER_ADMIN_AUTH_PATH: 'http://localhost:8251'
+ENV SENZING_API_SERVER_URL="http://localhost:8250"
+ENV SENZING_WEB_SERVER_ADMIN_AUTH_MODE="JWT"
+ENV SENZING_WEB_SERVER_ADMIN_AUTH_PATH="http://localhost:8251"
 ENV SENZING_WEB_SERVER_API_PATH="/api"
 ENV SENZING_WEB_SERVER_PORT=8251
-ENV SENZING_WEB_SERVER_URL: "http://localhost:8251"
+ENV SENZING_WEB_SERVER_URL="http://localhost:8251"
 
 WORKDIR /app
 CMD ["/usr/bin/supervisord", "--nodaemon"]
