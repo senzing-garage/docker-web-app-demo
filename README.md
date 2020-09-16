@@ -38,6 +38,7 @@ and visualize results with the "Entity Search Web App".
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
+1. [Troubleshooting](#troubleshooting)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -227,7 +228,8 @@ For other databases, these steps may be skipped.
     sudo docker run \
       --detach \
       --name senzing-web-app-demo \
-      --publish 8251:80 \
+      --publish 8250:8250 \
+      --publish 8251:8251 \
       --restart always \
       --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
@@ -303,6 +305,25 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     Note: `sudo make docker-build-development-cache` can be used to create cached docker layers.
 
 ## Examples
+
+## Troubleshooting
+
+### Database connectivity
+
+The [Senzing API Server](https://github.com/Senzing/senzing-api-server)
+gets database connection information from `${SENZING_ETC_DIR}/G2Module.ini`.
+Make sure the `CONNECTION` information identifies the correct database.
+Example:
+
+```ini
+[PIPELINE]
+SUPPORTPATH = /opt/senzing/data
+CONFIGPATH = /etc/opt/senzing
+RESOURCEPATH = /opt/senzing/g2/resources
+
+[SQL]
+CONNECTION = postgresql://username:password@my-database.example.com:5432:G2/
+```
 
 ## Errors
 
