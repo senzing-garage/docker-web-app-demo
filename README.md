@@ -307,7 +307,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
 ## Troubleshooting
 
-### Database connectivity.
+### Database connectivity
 
 The [Senzing API Server](https://github.com/Senzing/senzing-api-server)
 gets database connection information from `${SENZING_ETC_DIR}/G2Module.ini`.
