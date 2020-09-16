@@ -38,6 +38,7 @@ and visualize results with the "Entity Search Web App".
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
+1. [Troubleshooting](#troubleshooting)
 1. [Errors](#errors)
 1. [References](#references)
 
