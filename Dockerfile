@@ -55,8 +55,8 @@ RUN pip3 install \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-api-server:2.0.0     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
-COPY --from=senzing/entity-search-web-app:2.0.0  "/app/" "/app/"
+COPY --from=senzing/senzing-api-server:2.2.1     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
+COPY --from=senzing/entity-search-web-app:2.1.1  "/app/" "/app/"
 
 # Copy files from repository.
 
