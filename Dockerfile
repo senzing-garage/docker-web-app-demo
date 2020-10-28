@@ -36,7 +36,7 @@ RUN apt-get update \
       unixodbc \
       unixodbc-dev \
       vim \
- && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+ && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
  && apt-get -y install \
       build-essential \
       nodejs \
