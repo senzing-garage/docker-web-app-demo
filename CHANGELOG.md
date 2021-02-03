@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2021-02-03
+
+### Added in 2.1.1
+
+- Packages: `procps`, `tree`
+
+### Changed in 2.1.1
+
+- Updated base to `senzing/senzing-base:1.5.2`
+- Updated to `senzing/senzing-api-server:2.3.1`
+- Updated to `senzing/entity-search-web-app:2.2.1`
+
 ## [2.1.0] - 2020-10-28
 
 ### Changed in 2.1.0
