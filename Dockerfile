@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=senzing/senzing-base:1.5.1
+ARG BASE_IMAGE=senzing/senzing-base:1.5.2
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2020-07-17
+ENV REFRESHED_AT=2021-02-03
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
-      Version="2.0.0"
+      Version="2.1.1"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -28,11 +28,13 @@ RUN apt-get update \
       ipython \
       itop \
       less \
-      odbc-postgresql \
       net-tools \
+      odbc-postgresql \
+      procps \
       pstack \
       python-pyodbc \
       supervisor \
+      tree \
       unixodbc \
       unixodbc-dev \
       vim \
@@ -44,19 +46,20 @@ RUN apt-get update \
 
 # Install packages via pip.
 
-RUN pip3 install \
-    csvkit \
-    fuzzywuzzy \
-    ptable \
-    pandas \
-    python-levenshtein \
-    pyodbc \
-    setuptools
+RUN pip3 install --upgrade pip \
+ && pip3 install \
+      csvkit \
+      fuzzywuzzy \
+      ptable \
+      pandas \
+      python-levenshtein \
+      pyodbc \
+      setuptools
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-api-server:2.2.1     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
-COPY --from=senzing/entity-search-web-app:2.1.1  "/app/" "/app/"
+COPY --from=senzing/senzing-api-server:2.3.1     "/app/senzing-api-server.jar" "/app/senzing-api-server.jar"
+COPY --from=senzing/entity-search-web-app:2.2.1  "/app/" "/app/"
 
 # Copy files from repository.
 
