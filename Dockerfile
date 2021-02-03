@@ -68,8 +68,7 @@ COPY ./rootfs /
 # Install NPM program.
 
 WORKDIR /app
-RUN npm init -y \
- && npm install
+RUN npm install
 
 # Services exposed on port 8250 and 8251.
 
