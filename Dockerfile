@@ -25,14 +25,12 @@ RUN apt-get update \
       fio \
       htop \
       iotop \
-      ipython \
+      ipython3 \
       itop \
       less \
       net-tools \
       odbc-postgresql \
       procps \
-      pstack \
-      python-pyodbc \
       supervisor \
       tree \
       unixodbc \
