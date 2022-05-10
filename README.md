@@ -5,7 +5,7 @@
 This repository is used to create the `senzing/web-app-demo` docker image
 which demonstrates the combination of two projects:
 
-1. [senzing-api-server](https://github.com/Senzing/senzing-api-server)
+1. [senzing-poc-server](https://github.com/Senzing/senzing-poc-server)
 1. [entity-search-web-app](https://github.com/Senzing/entity-search-web-app)
 
 The result is that a user can run the docker container using a local
@@ -310,7 +310,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
 ### Database connectivity
 
-The [Senzing API Server](https://github.com/Senzing/senzing-api-server)
+The [Senzing POC Server](https://github.com/Senzing/senzing-poc-server)
 gets database connection information from `${SENZING_ETC_DIR}/G2Module.ini`.
 Make sure the `CONNECTION` information identifies the correct database.
 Example:
