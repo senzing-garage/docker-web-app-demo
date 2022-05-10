@@ -6,10 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.4] - 2022-05-10
+## [2.2.0] - 2022-05-10
 
-### Changed to 2.1.4
+### Changed to 2.2.0
 
+- Supports Senzing V3
 - Switched to `senzing/senzing-poc-server:3.0.1`
 - Upgrade to `senzing/entity-search-web-app:2.6.0`
 
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed to 2.1.3
 
+- Last version supporting Senzing V2
 - Upgrade to `senzing/senzing-base:1.6.2`
 - Upgrade to `senzing/senzing-api-server:2.7.4`
 - Upgrade to `senzing/entity-search-web-app:2.3.2`
