@@ -10,8 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed to 2.3.0
 
-- Supports Senzing V3
-- Switched to `senzing/senzing-poc-server:3.1.0`
+- Upgrade to `senzing/senzing-poc-server:3.0.2`
 - Upgrade to `senzing/entity-search-web-app:2.7.0`
 
 ## [2.2.0] - 2022-05-19

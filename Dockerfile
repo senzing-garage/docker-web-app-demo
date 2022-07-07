@@ -56,7 +56,7 @@ RUN pip3 install --upgrade pip \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-poc-server:3.1.0     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
+COPY --from=senzing/senzing-poc-server:3.0.2     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
 COPY --from=senzing/entity-search-web-app:2.7.0  "/app/" "/app/"
 
 # Copy files from repository.
