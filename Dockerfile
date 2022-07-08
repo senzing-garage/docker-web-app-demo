@@ -1,11 +1,11 @@
 ARG BASE_IMAGE=senzing/senzing-base:1.6.9
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2022-06-27
+ENV REFRESHED_AT=2022-07-07
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
-      Version="2.2.0"
+      Version="2.3.0"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -56,8 +56,8 @@ RUN pip3 install --upgrade pip \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-poc-server:3.0.1     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
-COPY --from=senzing/entity-search-web-app:2.6.0  "/app/" "/app/"
+COPY --from=senzing/senzing-poc-server:3.0.2     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
+COPY --from=senzing/entity-search-web-app:2.7.0  "/app/" "/app/"
 
 # Copy files from repository.
 
