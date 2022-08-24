@@ -180,6 +180,7 @@ which demonstrates the combination of two projects:
     ```console
     sudo docker run \
       --env-file ${SENZING_DOCKER_ENV_FILE} \
+      --name senzing-web-app-demo \
       --publish 8250:8250 \
       --publish 8251:8251 \
       --rm \
