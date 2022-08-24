@@ -150,7 +150,7 @@ which demonstrates the combination of two projects:
    ```
 
 1. :pencil2: Create the `${SENZING_DOCKER_ENV_FILE}` file, similar to
-   [senzing.env](../docs/senzing.env),
+   [senzing.env](docs/senzing.env),
    containing the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
 
    Example `${SENZING_DOCKER_ENV_FILE}` file contents:
