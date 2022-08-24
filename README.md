@@ -1,6 +1,6 @@
 # docker-web-app-demo
 
-## Overview
+## Synopsis
 
 This repository is used to create the `senzing/web-app-demo` docker image
 which demonstrates the combination of two projects:
@@ -8,10 +8,21 @@ which demonstrates the combination of two projects:
 1. [senzing-poc-server](https://github.com/Senzing/senzing-poc-server)
 1. [entity-search-web-app](https://github.com/Senzing/entity-search-web-app)
 
-### Related artifacts
+## Overview
 
-1. DockerHub
-    1. [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
+1. It's as easy as...
+
+    ```console
+    docker run \
+      --env SENZING_ENGINE_CONFIGURATION_JSON \
+      --publish 8251:8251 \
+      senzing/web-app-demo
+    ```
+
+1. Then view Senzing Entity Search WebApp at
+   [localhost:8251](http://localhost:8251).
+
+Now for the details...
 
 ### Contents
 
@@ -263,6 +274,11 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
 ## Examples
 
 ## Advanced
+
+### Related artifacts
+
+1. DockerHub
+    1. [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
 
 ## Errors
 
