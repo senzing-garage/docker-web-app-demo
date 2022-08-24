@@ -21,11 +21,6 @@ which demonstrates the combination of two projects:
     1. [Time](#time)
     1. [Background knowledge](#background-knowledge)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
-    1. [Initialize Senzing](#initialize-senzing)
-    1. [Docker user](#docker-user)
-    1. [External database](#external-database)
-    1. [Database support](#database-support)
-    1. [Run docker container](#run-docker-container)
 1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
@@ -63,80 +58,41 @@ This repository assumes a working knowledge of:
 
 ## Demonstrate using Docker
 
-### Initialize Senzing
+### Pre-requisites
 
-1. If Senzing has not been initialized, visit
-   "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/initialize-senzing-with-docker.md)".
+1. A database that has been populated with the Senzing schema and Senzing configuration.
 
-### Docker user
+### Steps
 
-:thinking: **Optional:**  The docker container runs as "USER 1001".
-Use if a different userid (UID) is required.
-
-1. :pencil2: Manually identify user.
-   User "0" is root.
+1. :pencil2: Specify a file that will contain the Senzing Engine Configuration JSON.
    Example:
 
     ```console
-    export SENZING_RUNAS_USER="0"
+    export SENZING_ENGINE_CONFIGURATION_JSON_FILE=~/senzing-engine-configuration.json
     ```
 
-   Another option, use current user.
-   Example:
+1. Create `${SENZING_ENGINE_CONFIGURATION_JSON_FILE}`
+   containing Senzing Engine Configuration JSON.
+   **Note:** All JSON values must relative to *inside* the Docker container.
+   For instance, the database hostname specified in `SQL`.`CONNECTION`
+   cannot be `localhost` nor `127.0.0.1`.
+   The paths are relative to the Senzing installation *inside* the container,
+   not on the system hosting the Docker containers.
+   Example `${SENZING_ENGINE_CONFIGURATION_JSON_FILE}` contents:
 
-    ```console
-    export SENZING_RUNAS_USER=$(id -u)
+    ```json
+    {
+        "PIPELINE": {
+            "CONFIGPATH": "/etc/opt/senzing",
+            "LICENSESTRINGBASE64": "",
+            "RESOURCEPATH": "/opt/senzing/g2/resources",
+            "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+            "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
+        }
+    }
     ```
-
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_RUNAS_USER_PARAMETER="--user ${SENZING_RUNAS_USER}"
-    ```
-
-### External database
-
-:thinking: **Optional:**  Use if storing data in an external database.
-If not specified, the internal SQLite database will be used.
-
-1. :pencil2: Specify database.
-   Example:
-
-    ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
-    export DATABASE_HOST=senzing-postgresql
-    export DATABASE_PORT=5432
-    export DATABASE_DATABASE=G2
-    ```
-
-1. Construct Database URL.
-   Example:
-
-    ```console
-    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
-    ```
-
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_DATABASE_URL_PARAMETER="--env SENZING_DATABASE_URL=${SENZING_DATABASE_URL}"
-    ```
-
-### Database support
-
-:thinking: **Optional:**  Some database need additional support.
-For other databases, these steps may be skipped.
-
-1. **Db2:** See
-   [Support Db2](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/support-db2.md)
-   instructions to set `SENZING_OPT_IBM_DIR_PARAMETER`.
-1. **MS SQL:** See
-   [Support MS SQL](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/support-mssql.md)
-   instructions to set `SENZING_OPT_MICROSOFT_DIR_PARAMETER`.
 
 ### Run docker container
 
@@ -145,26 +101,12 @@ For other databases, these steps may be skipped.
 
     ```console
     sudo docker run \
-      --detach \
+      --env SENZING_ENGINE_CONFIGURATION_JSON=$(cat ${SENZING_ENGINE_CONFIGURATION_JSON_FILE}) \
       --name senzing-web-app-demo \
       --publish 8250:8250 \
       --publish 8251:8251 \
-      --restart always \
-      ${SENZING_RUNAS_USER_PARAMETER} \
-      ${SENZING_DATABASE_URL_PARAMETER} \
-      ${SENZING_NETWORK_PARAMETER} \
-      ${SENZING_OPT_IBM_DIR_PARAMETER} \
-      ${SENZING_OPT_MICROSOFT_DIR_PARAMETER} \
+      --rm \
       senzing/web-app-demo
-    ```
-
-1. "Entity Search Web App" can be viewed at [localhost:8251](http://localhost:8251), since 8251 was the published port.
-
-1. To stop container. Example:
-
-    ```console
-    sudo docker container kill senzing-web-app-demo
-    sudo docker container rm   senzing-web-app-demo
     ```
 
 ## Demonstrate using docker-compose
