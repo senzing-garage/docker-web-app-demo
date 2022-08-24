@@ -21,6 +21,9 @@ which demonstrates the combination of two projects:
     1. [Pre-requisites](#pre-requisites)
     1. [Create Docker.env file with Senzing Engine configuration](#create-docker-env-file-with-senzing-engine-configuration)
     1. [Run Docker container](#run-docker-container)
+1. [View results](#view-results)
+    1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+    1. [View Senzing API Server](#view-senzing-api-server)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
@@ -99,6 +102,8 @@ which demonstrates the combination of two projects:
     cd ${SENZING_DEMO_DIR}
     sudo --preserve-env docker-compose up
     ```
+
+1. [View results](#view-results).
 
 ## Demonstrate using Docker
 
@@ -181,6 +186,26 @@ which demonstrates the combination of two projects:
       ${SENZING_NETWORK_PARAMETER} \
       senzing/web-app-demo
     ```
+
+## View results
+
+### View Senzing Entity Search WebApp
+
+1. Senzing Entity Search WebApp is viewable at
+   [localhost:8251](http://localhost:8251).
+
+### View Senzing API Server
+
+View results from Senzing REST API server.
+The server supports the
+[Senzing REST API](https://github.com/Senzing/senzing-rest-api-specification).
+
+1. The
+   [OpenApi Editor](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml)
+   with **Servers** value of [http://localhost:8250](http://localhost:8250)
+   can be used to try the Senzing REST API.
+1. Example Senzing REST API request:
+   [localhost:8250/heartbeat](http://localhost:8250/heartbeat)
 
 ## Develop
 
