@@ -22,7 +22,7 @@ which demonstrates the combination of two projects:
 1. Then view Senzing Entity Search WebApp at
    [localhost:8251](http://localhost:8251).
 
-Now for the details...
+**Now for the details...**
 
 ### Contents
 
