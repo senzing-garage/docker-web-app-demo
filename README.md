@@ -62,7 +62,7 @@ This repository assumes a working knowledge of:
 
 1. A database that has been populated with the Senzing schema and Senzing configuration.
 
-### Steps
+### Create Senzing Engine configuration
 
 1. :pencil2: Specify a file that will contain the Senzing Engine Configuration JSON.
    Example:
@@ -73,11 +73,13 @@ This repository assumes a working knowledge of:
 
 1. Create `${SENZING_ENGINE_CONFIGURATION_JSON_FILE}`
    containing Senzing Engine Configuration JSON.
+
    **Note:** All JSON values must relative to *inside* the Docker container.
    For instance, the database hostname specified in `SQL`.`CONNECTION`
    cannot be `localhost` nor `127.0.0.1`.
    The paths are relative to the Senzing installation *inside* the container,
    not on the system hosting the Docker containers.
+
    Example `${SENZING_ENGINE_CONFIGURATION_JSON_FILE}` contents:
 
     ```json
@@ -94,6 +96,13 @@ This repository assumes a working knowledge of:
     }
     ```
 
+1. Create environment variable:
+   Example:
+
+    ```console
+    export SENZING_ENGINE_CONFIGURATION_JSON=$(cat ${SENZING_ENGINE_CONFIGURATION_JSON_FILE})
+    ```
+
 ### Run docker container
 
 1. Run docker container.
@@ -101,7 +110,7 @@ This repository assumes a working knowledge of:
 
     ```console
     sudo docker run \
-      --env SENZING_ENGINE_CONFIGURATION_JSON=$(cat ${SENZING_ENGINE_CONFIGURATION_JSON_FILE}) \
+      --env SENZING_ENGINE_CONFIGURATION_JSON=${SENZING_ENGINE_CONFIGURATION_JSON} \
       --name senzing-web-app-demo \
       --publish 8250:8250 \
       --publish 8251:8251 \
