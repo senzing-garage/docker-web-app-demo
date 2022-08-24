@@ -12,14 +12,13 @@ which demonstrates the combination of two projects:
 
 1. DockerHub
     1. [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
-    1. [senzing/web-app-demo-unstable](https://hub.docker.com/r/senzing/web-app-demo-unstable)
 
 ### Contents
 
 1. [Expectations](#expectations)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Pre-requisites](#pre-requisites)
-    1. [Create Senzing Engine configuration](#create-senzing-engine-configuration)
+    1. [Create Docker.env file with Senzing Engine configuration](#create-docker-env-file-with-senzing-engine-configuration)
     1. [Run Docker container](#run-docker-container)
 1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [Develop](#develop)
@@ -28,7 +27,6 @@ which demonstrates the combination of two projects:
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
 1. [Advanced](#advanced)
-    1. [Configuration](#configuration)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -80,15 +78,14 @@ which demonstrates the combination of two projects:
     }
 
 1. :pencil2: Specify a file to be used as
-   [Docker --env-file](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file)
-   file.
+   [Docker --env-file](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file).
    Example:
 
    ```console
    export SENZING_DOCKER_ENV_FILE=~/senzing.env
    ```
 
-1. Create the `${SENZING_DOCKER_ENV_FILE}` file containing the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
+1. :pencil2: Create the `${SENZING_DOCKER_ENV_FILE}` file containing the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
 
    Example `${SENZING_DOCKER_ENV_FILE}` file contents:
 
@@ -219,19 +216,6 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
 ## Examples
 
 ## Advanced
-
-### Configuration
-
-Configuration values specified by environment variable or command line parameter.
-
-- **[SENZING_DATA_VERSION_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_version_dir)**
-- **[SENZING_DATABASE_URL](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_database_url)**
-- **[SENZING_DEBUG](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_debug)**
-- **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_etc_dir)**
-- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_g2_dir)**
-- **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_network)**
-- **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_runas_user)**
-- **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_var_dir)**
 
 ## Errors
 
