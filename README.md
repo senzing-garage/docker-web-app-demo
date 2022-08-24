@@ -22,17 +22,18 @@ which demonstrates the combination of two projects:
     1. [Background knowledge](#background-knowledge)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Initialize Senzing](#initialize-senzing)
-    1. [Configuration](#configuration)
     1. [Docker user](#docker-user)
     1. [External database](#external-database)
     1. [Database support](#database-support)
     1. [Run docker container](#run-docker-container)
+1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
-1. [Troubleshooting](#troubleshooting)
+1. [Advanced](#advanced)
+    1. [Configuration](#configuration)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -66,19 +67,6 @@ This repository assumes a working knowledge of:
 
 1. If Senzing has not been initialized, visit
    "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/initialize-senzing-with-docker.md)".
-
-### Configuration
-
-Configuration values specified by environment variable or command line parameter.
-
-- **[SENZING_DATA_VERSION_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_version_dir)**
-- **[SENZING_DATABASE_URL](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_database_url)**
-- **[SENZING_DEBUG](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_debug)**
-- **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_etc_dir)**
-- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_g2_dir)**
-- **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_network)**
-- **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_runas_user)**
-- **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_var_dir)**
 
 ### Docker user
 
@@ -162,10 +150,6 @@ For other databases, these steps may be skipped.
       --publish 8250:8250 \
       --publish 8251:8251 \
       --restart always \
-      --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
-      --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
-      --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
       ${SENZING_RUNAS_USER_PARAMETER} \
       ${SENZING_DATABASE_URL_PARAMETER} \
       ${SENZING_NETWORK_PARAMETER} \
@@ -192,7 +176,7 @@ For other databases, these steps may be skipped.
     export SENZING_DEMO_DIR=~/my-senzing-demo
     ```
 
-1. Set environment variables used in docker-compose.yaml file.
+1. Set environment variables used in `docker-compose.yaml` file.
    Example:
 
     ```console
@@ -208,7 +192,7 @@ For other databases, these steps may be skipped.
     chmod -R 755 ${POSTGRES_DIR}
     ```
 
-1. Set environment variables for Docker image tags.
+1. Set environment variables for Docker image tags used in `docker-compose.yaml` file.
    Example:
 
     ```console
@@ -226,7 +210,7 @@ For other databases, these steps may be skipped.
         --output ${SENZING_DEMO_DIR}/docker-compose.yaml \
         "https://raw.githubusercontent.com/Senzing/docker-web-app-demo/main/docker-compose.yaml"
     cd ${SENZING_DEMO_DIR}
-    sudo --preserve-env docker-compose pull
+    sudo --preserve-env docker-compose --profile all pull
     ```
 
 1. Bring up Senzing docker-compose stack.
@@ -234,7 +218,7 @@ For other databases, these steps may be skipped.
 
     ```console
     cd ${SENZING_DEMO_DIR}
-    sudo --preserve-env docker-compose up
+    sudo --preserve-env docker-compose --profile all up
     ```
 
 ## Develop
@@ -291,9 +275,20 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
 
 ## Examples
 
-## Troubleshooting
+## Advanced
 
-### Database connectivity
+### Configuration
+
+Configuration values specified by environment variable or command line parameter.
+
+- **[SENZING_DATA_VERSION_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_version_dir)**
+- **[SENZING_DATABASE_URL](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_database_url)**
+- **[SENZING_DEBUG](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_debug)**
+- **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_etc_dir)**
+- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_g2_dir)**
+- **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_network)**
+- **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_runas_user)**
+- **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_var_dir)**
 
 ## Errors
 
