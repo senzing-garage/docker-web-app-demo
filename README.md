@@ -16,11 +16,11 @@ which demonstrates the combination of two projects:
 ### Contents
 
 1. [Expectations](#expectations)
+1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Pre-requisites](#pre-requisites)
     1. [Create Docker.env file with Senzing Engine configuration](#create-docker-env-file-with-senzing-engine-configuration)
     1. [Run Docker container](#run-docker-container)
-1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
@@ -45,67 +45,6 @@ which demonstrates the combination of two projects:
 - **Background knowledge:** This repository assumes a working knowledge of:
   - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
   - [Docker-compose](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker-compose.md)
-
-## Demonstrate using Docker
-
-### Pre-requisites
-
-1. A database that has been populated with the Senzing schema and Senzing configuration.
-
-### Create Docker .env file with Senzing Engine configuration
-
-1. Construct the Senzing Engine configuration JSON.
-
-   **Note:** All JSON values must relative to *inside* the Docker container.
-   For instance, the database hostname specified in `SQL`.`CONNECTION`
-   cannot be `localhost` nor `127.0.0.1`.
-   The paths are relative to the Senzing installation *inside* the container,
-   not on the system hosting the Docker containers.
-
-   Example:
-
-    ```json
-    {
-        "PIPELINE": {
-            "CONFIGPATH": "/etc/opt/senzing",
-            "LICENSESTRINGBASE64": "",
-            "RESOURCEPATH": "/opt/senzing/g2/resources",
-            "SUPPORTPATH": "/opt/senzing/data"
-        },
-        "SQL": {
-            "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
-        }
-    }
-
-1. :pencil2: Specify a file to be used as
-   [Docker --env-file](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file).
-   Example:
-
-   ```console
-   export SENZING_DOCKER_ENV_FILE=~/senzing.env
-   ```
-
-1. :pencil2: Create the `${SENZING_DOCKER_ENV_FILE}` file containing the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
-
-   Example `${SENZING_DOCKER_ENV_FILE}` file contents:
-
-   ```console
-   SENZING_ENGINE_CONFIGURATION_JSON={"PIPELINE": {"CONFIGPATH": "/etc/opt/senzing", "LICENSESTRINGBASE64": "", "RESOURCEPATH": "/opt/senzing/g2/resources", "SUPPORTPATH": "/opt/senzing/data" }, "SQL": {"CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"}}
-   ```
-
-### Run docker container
-
-1. Run docker container.
-   Example:
-
-    ```console
-    sudo docker run \
-      --env-file ${SENZING_DOCKER_ENV_FILE} \
-      --publish 8250:8250 \
-      --publish 8251:8251 \
-      --rm \
-      senzing/web-app-demo
-    ```
 
 ## Demonstrate using docker-compose
 
@@ -150,7 +89,7 @@ which demonstrates the combination of two projects:
         --output ${SENZING_DEMO_DIR}/docker-compose.yaml \
         "https://raw.githubusercontent.com/Senzing/docker-web-app-demo/main/docker-compose.yaml"
     cd ${SENZING_DEMO_DIR}
-    sudo --preserve-env docker-compose --profile all pull
+    sudo --preserve-env docker-compose pull
     ```
 
 1. Bring up Senzing docker-compose stack.
@@ -158,7 +97,87 @@ which demonstrates the combination of two projects:
 
     ```console
     cd ${SENZING_DEMO_DIR}
-    sudo --preserve-env docker-compose --profile all up
+    sudo --preserve-env docker-compose up
+    ```
+
+## Demonstrate using Docker
+
+### Pre-requisites
+
+1. A database that has been populated with the Senzing schema and Senzing configuration.
+
+1. :thinking: Alternatively, a demonstration database can be provisioned
+   by following the instructions at
+   [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
+   using this variation of the `docker-compose up` command:
+
+    ```console
+    cd ${SENZING_DEMO_DIR}
+    sudo --preserve-env docker-compose up postgres init-postgresql
+    ```
+
+### Create Docker .env file with Senzing Engine configuration
+
+1. Construct the Senzing Engine configuration JSON.
+
+   **Note:** All JSON values must relative to *inside* the Docker container.
+   For instance, the database hostname specified in `SQL`.`CONNECTION`
+   cannot be `localhost` nor `127.0.0.1`.
+   The paths are relative to the Senzing installation *inside* the container,
+   not on the system hosting the Docker containers.
+
+   Example:
+
+    ```json
+    {
+        "PIPELINE": {
+            "CONFIGPATH": "/etc/opt/senzing",
+            "LICENSESTRINGBASE64": "",
+            "RESOURCEPATH": "/opt/senzing/g2/resources",
+            "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+            "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
+        }
+    }
+
+1. :pencil2: Specify a file to be used as
+   [Docker --env-file](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file).
+   Example:
+
+   ```console
+   export SENZING_DOCKER_ENV_FILE=~/senzing.env
+   ```
+
+1. :pencil2: Create the `${SENZING_DOCKER_ENV_FILE}` file containing the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
+
+   Example `${SENZING_DOCKER_ENV_FILE}` file contents:
+
+   ```console
+   SENZING_ENGINE_CONFIGURATION_JSON={"PIPELINE": {"CONFIGPATH": "/etc/opt/senzing", "LICENSESTRINGBASE64": "", "RESOURCEPATH": "/opt/senzing/g2/resources", "SUPPORTPATH": "/opt/senzing/data" }, "SQL": {"CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"}}
+   ```
+
+### Run docker container
+
+1. If using docker-compose to bring up a database stack,
+   set the `--net` parameter for `docker run`.
+   Example:
+
+    ```console
+    export SENZING_NETWORK_PARAMETER="--net senzing-network"
+    ```
+
+1. Run docker container.
+   Example:
+
+    ```console
+    sudo docker run \
+      --env-file ${SENZING_DOCKER_ENV_FILE} \
+      --publish 8250:8250 \
+      --publish 8251:8251 \
+      --rm \
+      ${SENZING_NETWORK_PARAMETER} \
+      senzing/web-app-demo
     ```
 
 ## Develop
