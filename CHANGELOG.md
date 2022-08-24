@@ -13,9 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgrade to `senzing/senzing-poc-server:3.2.1`
 - Upgrade to `senzing/entity-search-web-app:2.7.1`
 - Removed extraneous apt-get packages
-- Removed pip installs
+- Removed all pip installs
 - Migrated from  senzing-base:1.6.10 to senzingapi-runtime:3.1.2
-- 
+- Moved Senzing API Server options from `supervisord` config file to environment variables
+- Updated README.md
+
+### Deleted in 2.4.0
+
+- `Dockerfile-unstable`
 
 ## [2.3.0] - 2022-07-08
 
@@ -64,7 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed in 2.1.0
 
 - Update to `senzing-api-server:2.2.1`, `entity-search-web-app:2.1.1`
-- Update to https://deb.nodesource.com/setup_12.x
+- Update to <https://deb.nodesource.com/setup_12.x>
 
 ### Fixed in 2.1.0
 
@@ -78,9 +83,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update to senzing/senzing-api-server:2.0.0
 - Update to senzing/entity-search-web-app:2.0.0
 - Added environment variables:
-    - `SENZING_WEB_SERVER_ADMIN_AUTH_MODE`
-    - `SENZING_WEB_SERVER_ADMIN_AUTH_PATH`
-    - `SENZING_WEB_SERVER_URL`
+  - `SENZING_WEB_SERVER_ADMIN_AUTH_MODE`
+  - `SENZING_WEB_SERVER_ADMIN_AUTH_PATH`
+  - `SENZING_WEB_SERVER_URL`
 
 ## [1.3.0] - 2020-07-08
 
