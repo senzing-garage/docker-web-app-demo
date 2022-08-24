@@ -17,9 +17,6 @@ which demonstrates the combination of two projects:
 ### Contents
 
 1. [Expectations](#expectations)
-    1. [Space](#space)
-    1. [Time](#time)
-    1. [Background knowledge](#background-knowledge)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Pre-requisites](#pre-requisites)
     1. [Create Senzing Engine configuration](#create-senzing-engine-configuration)
@@ -45,19 +42,11 @@ which demonstrates the combination of two projects:
 
 ## Expectations
 
-### Space
-
-This repository and demonstration require 6 GB free disk space.
-
-### Time
-
-Budget 15 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
-
-### Background knowledge
-
-This repository assumes a working knowledge of:
-
-1. [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+- **Space:** This repository and demonstration require 6 GB free disk space.
+- **Time:** Budget 15 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+- **Background knowledge:** This repository assumes a working knowledge of:
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Docker-compose](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker-compose.md)
 
 ## Demonstrate using Docker
 
@@ -95,6 +84,20 @@ This repository assumes a working knowledge of:
         },
         "SQL": {
             "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
+        }
+    }
+    ```
+
+    ```json
+    {
+        \"PIPELINE\": {
+            \"CONFIGPATH\": \"/etc/opt/senzing\",
+            \"LICENSESTRINGBASE64\": \"\",
+            \"RESOURCEPATH\": \"/opt/senzing/g2/resources\",
+            \"SUPPORTPATH\": \"/opt/senzing/data\"
+        },
+        \"SQL\": {
+            \"CONNECTION\": \"postgresql://postgres:postgres@senzing-postgres:5432:G2/\"
         }
     }
     ```
