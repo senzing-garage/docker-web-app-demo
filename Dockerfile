@@ -17,12 +17,11 @@ USER root
 
 RUN apt-get update \
  && apt-get -y install \
-      curl \
       default-jdk \
       supervisor \
- && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+      wget \
+ && wget -qO - https://deb.nodesource.com/setup_12.x | bash - \
  && apt-get -y install \
-      build-essential \
       nodejs \
  && rm -rf /var/lib/apt/lists/*
 
