@@ -166,8 +166,8 @@ which demonstrates the combination of two projects:
 
 ### Run docker container
 
-1. If using docker-compose to bring up a database stack,
-   set the `--net` parameter for `docker run`.
+1. :thinking: If using docker-compose to bring up a database stack,
+   set the `--net` parameter for use in `docker run`.
    Example:
 
     ```console
