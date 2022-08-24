@@ -38,6 +38,8 @@ and visualize results with the "Entity Search Web App".
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
+1. [Advanced](#advanced)
+    1. [Container Signature Verification](#container-signature-verification)
 1. [Troubleshooting](#troubleshooting)
 1. [Errors](#errors)
 1. [References](#references)
@@ -324,6 +326,25 @@ RESOURCEPATH = /opt/senzing/g2/resources
 [SQL]
 CONNECTION = postgresql://username:password@my-database.example.com:5432:G2/
 ```
+
+## Advanced
+
+### Container Signature Verification
+
+Container image integrity has become increasingly important as images are being deployed into zero-trust environments. The image integrity is achieved by container signatures. They provide developers with cryptographic assurance that the images they are pulling in are from a trusted source.
+
+To verify Senzing's dockerhub images, first copy the hash of the docker image pulled.
+![dockerhub hash](assets/dockerhub_hash.png)
+
+Then verify the hash using cosign.
+```
+COSIGN_EXPERIMENTAL=1 cosign verify senzing/web-app-demo@sha256:<insert sha256 hash>
+```
+
+This is what a successful verification looks like.
+![cosign verify](assets/cosign_verify.png)
+
+To learn more about cosign and how to install, go [here](https://github.com/sigstore/cosign).
 
 ## Errors
 
