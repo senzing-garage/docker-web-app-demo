@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=senzing/senzingapi-runtime:3.1.2
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2022-08-23
+ENV REFRESHED_AT=2022-08-24
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
@@ -30,18 +30,6 @@ RUN apt-get update \
       build-essential \
       nodejs \
  && rm -rf /var/lib/apt/lists/*
-
-# Install packages via pip.
-
-#RUN pip3 install --upgrade pip \
-# && pip3 install \
-#      csvkit \S
-#      fuzzywuzzy \
-#      ptable \
-#      pandas \
-#      python-levenshtein \
-#      pyodbc \
-#      setuptools
 
 # Copy files from other docker images.
 
