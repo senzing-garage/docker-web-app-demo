@@ -56,6 +56,39 @@ which demonstrates the combination of two projects:
 
 ### Create Senzing Engine configuration
 
+1. Construct the Senzing Engine configuration JSON document.
+
+   **Note:** All JSON values must relative to *inside* the Docker container.
+   For instance, the database hostname specified in `SQL`.`CONNECTION`
+   cannot be `localhost` nor `127.0.0.1`.
+   The paths are relative to the Senzing installation *inside* the container,
+   not on the system hosting the Docker containers.
+
+   Example Senzing Engine configuration JSON document:
+
+    ```json
+    {
+        "PIPELINE": {
+            "CONFIGPATH": "/etc/opt/senzing",
+            "LICENSESTRINGBASE64": "",
+            "RESOURCEPATH": "/opt/senzing/g2/resources",
+            "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+            "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
+        }
+    }
+    
+1. Create a 
+   [Docker .env](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file)
+   file for the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
+   
+   Example `~/senzing.env` file contents:
+   
+   ```console
+   SENZING_ENGINE_CONFIGURATION_JSON={"PIPELINE": {"CONFIGPATH": "/etc/opt/senzing", "LICENSESTRINGBASE64": "", "RESOURCEPATH": "/opt/senzing/g2/resources", "SUPPORTPATH": "/opt/senzing/data"     },     "SQL": {         "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"     } }
+   ```
+
 1. :pencil2: Specify a file that will contain the Senzing Engine Configuration JSON.
    Example:
 
