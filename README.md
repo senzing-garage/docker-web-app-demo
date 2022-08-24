@@ -23,8 +23,6 @@ which demonstrates the combination of two projects:
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Initialize Senzing](#initialize-senzing)
     1. [Configuration](#configuration)
-    1. [Volumes](#volumes)
-    1. [Docker network](#docker-network)
     1. [Docker user](#docker-user)
     1. [External database](#external-database)
     1. [Database support](#database-support)
@@ -81,7 +79,6 @@ Configuration values specified by environment variable or command line parameter
 - **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_network)**
 - **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_runas_user)**
 - **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_var_dir)**
-
 
 ### Docker user
 
@@ -184,6 +181,60 @@ For other databases, these steps may be skipped.
     ```console
     sudo docker container kill senzing-web-app-demo
     sudo docker container rm   senzing-web-app-demo
+    ```
+
+## Demonstrate using docker-compose
+
+1. :pencil2: Specify where to store demonstration data.
+   Example:
+
+    ```console
+    export SENZING_DEMO_DIR=~/my-senzing-demo
+    ```
+
+1. Set environment variables used in docker-compose.yaml file.
+   Example:
+
+    ```console
+    export POSTGRES_DIR=${SENZING_DEMO_DIR}/postgres
+    export SENZING_UID=$(id -u)
+    ```
+
+1. Setup demonstration directory.
+   Example:
+
+    ```console
+    mkdir -p ${POSTGRES_DIR}
+    chmod -R 755 ${POSTGRES_DIR}
+    ```
+
+1. Get stable versions of Docker images.
+   Example:
+
+    ```console
+    curl -X GET \
+        --output ${SENZING_DEMO_DIR}/docker-versions-stable.sh \
+        https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-stable.sh
+    source ${SENZING_DEMO_DIR}/docker-versions-stable.sh
+    ```
+
+1. Download `docker-compose.yaml` and Docker images.
+   Example:
+
+    ```console
+    curl -X GET \
+        --output ${SENZING_DEMO_DIR}/docker-compose.yaml \
+        "https://raw.githubusercontent.com/Senzing/docker-web-app-demo/main/docker-compose.yaml"
+    cd ${SENZING_DEMO_DIR}
+    sudo --preserve-env docker-compose pull
+    ```
+
+1. Bring up Senzing docker-compose stack.
+   Example:
+
+    ```console
+    cd ${SENZING_DEMO_DIR}
+    sudo --preserve-env docker-compose up
     ```
 
 ## Develop
