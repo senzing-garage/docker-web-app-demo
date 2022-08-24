@@ -72,6 +72,7 @@ services:
     networks:
       - senzing
     ports:
+      - 8250:8250
       - 8251:8251
       - 8257:8257
     read_only: true
