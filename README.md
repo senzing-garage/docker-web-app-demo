@@ -208,7 +208,7 @@ For other databases, these steps may be skipped.
     chmod -R 755 ${POSTGRES_DIR}
     ```
 
-1. Get stable versions of Docker images.
+1. Set environment variables for Docker image tags.
    Example:
 
     ```console
