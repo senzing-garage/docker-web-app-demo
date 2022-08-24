@@ -13,17 +13,12 @@ HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
 USER root
 
-# Install packages via apt.
-# Note: There is a work-around for a lsb_release problem in the following RUN command.
+# Install packages via apt-get.
 
 RUN apt-get update \
  && apt-get -y install \
-      apt-utils \
       curl \
       default-jdk \
-      ipython3 \
-      odbc-postgresql \
-      procps \
       supervisor \
  && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
  && apt-get -y install \

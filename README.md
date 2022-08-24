@@ -8,10 +8,6 @@ which demonstrates the combination of two projects:
 1. [senzing-poc-server](https://github.com/Senzing/senzing-poc-server)
 1. [entity-search-web-app](https://github.com/Senzing/entity-search-web-app)
 
-The result is that a user can run the docker container using a local
-[/opt/senzing](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/create-senzing-dir.md)
-and visualize results with the "Entity Search Web App".
-
 ### Related artifacts
 
 1. DockerHub
@@ -58,7 +54,7 @@ This repository and demonstration require 6 GB free disk space.
 
 ### Time
 
-Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+Budget 15 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 
 ### Background knowledge
 
@@ -86,68 +82,6 @@ Configuration values specified by environment variable or command line parameter
 - **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_runas_user)**
 - **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_var_dir)**
 
-### Volumes
-
-1. :pencil2: Specify the directory containing the Senzing installation.
-   Use the same `SENZING_VOLUME` value used when performing
-   "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/initialize-senzing-with-docker.md)".
-   Example:
-
-    ```console
-    export SENZING_VOLUME=/opt/my-senzing
-    ```
-
-    1. Here's a simple test to see if `SENZING_VOLUME` is correct.
-       The following commands should return file contents.
-       Example:
-
-        ```console
-        cat ${SENZING_VOLUME}/g2/g2BuildVersion.json
-        cat ${SENZING_VOLUME}/data/3.0.0/libpostal/data_version
-        ```
-
-    1. :warning:
-       **macOS** - [File sharing](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/share-directories-with-docker.md#macos)
-       must be enabled for `SENZING_VOLUME`.
-    1. :warning:
-       **Windows** - [File sharing](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/share-directories-with-docker.md#windows)
-       must be enabled for `SENZING_VOLUME`.
-
-1. Identify the `data_version`, `etc`, `g2`, and `var` directories.
-   Example:
-
-    ```console
-    export SENZING_DATA_VERSION_DIR=${SENZING_VOLUME}/data/3.0.0
-    export SENZING_ETC_DIR=${SENZING_VOLUME}/etc
-    export SENZING_G2_DIR=${SENZING_VOLUME}/g2
-    export SENZING_VAR_DIR=${SENZING_VOLUME}/var
-    ```
-
-### Docker network
-
-:thinking: **Optional:**  Use if docker container is part of a docker network.
-
-1. List docker networks.
-   Example:
-
-    ```console
-    sudo docker network ls
-    ```
-
-1. :pencil2: Specify docker network.
-   Choose value from NAME column of `docker network ls`.
-   Example:
-
-    ```console
-    export SENZING_NETWORK=*nameofthe_network*
-    ```
-
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
-    ```
 
 ### Docker user
 
@@ -309,21 +243,6 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
 ## Troubleshooting
 
 ### Database connectivity
-
-The [Senzing POC Server](https://github.com/Senzing/senzing-poc-server)
-gets database connection information from `${SENZING_ETC_DIR}/G2Module.ini`.
-Make sure the `CONNECTION` information identifies the correct database.
-Example:
-
-```ini
-[PIPELINE]
-SUPPORTPATH = /opt/senzing/data
-CONFIGPATH = /etc/opt/senzing
-RESOURCEPATH = /opt/senzing/g2/resources
-
-[SQL]
-CONNECTION = postgresql://username:password@my-database.example.com:5432:G2/
-```
 
 ## Errors
 

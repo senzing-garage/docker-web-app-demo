@@ -74,7 +74,7 @@ services:
     ports:
       - 8251:8251
       - 8257:8257
-#   read_only: true
+    read_only: true
     restart: on-failure
     tmpfs:
       - /tmp
