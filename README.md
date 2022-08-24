@@ -54,9 +54,9 @@ which demonstrates the combination of two projects:
 
 1. A database that has been populated with the Senzing schema and Senzing configuration.
 
-### Create Senzing Engine configuration
+### Create Docker .env file with Senzing Engine configuration
 
-1. Construct the Senzing Engine configuration JSON document.
+1. Construct the Senzing Engine configuration JSON.
 
    **Note:** All JSON values must relative to *inside* the Docker container.
    For instance, the database hostname specified in `SQL`.`CONNECTION`
@@ -64,7 +64,7 @@ which demonstrates the combination of two projects:
    The paths are relative to the Senzing installation *inside* the container,
    not on the system hosting the Docker containers.
 
-   Example Senzing Engine configuration JSON document:
+   Example:
 
     ```json
     {
@@ -78,69 +78,23 @@ which demonstrates the combination of two projects:
             "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
         }
     }
-    
-1. Create a 
-   [Docker .env](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file)
-   file for the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
-   
-   Example `~/senzing.env` file contents:
-   
+
+1. :pencil2: Specify a file to be used as
+   [Docker --env-file](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file)
+   file.
+   Example:
+
    ```console
-   SENZING_ENGINE_CONFIGURATION_JSON={"PIPELINE": {"CONFIGPATH": "/etc/opt/senzing", "LICENSESTRINGBASE64": "", "RESOURCEPATH": "/opt/senzing/g2/resources", "SUPPORTPATH": "/opt/senzing/data"     },     "SQL": {         "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"     } }
+   export SENZING_DOCKER_ENV_FILE=~/senzing.env
    ```
 
-1. :pencil2: Specify a file that will contain the Senzing Engine Configuration JSON.
-   Example:
+1. Create the `${SENZING_DOCKER_ENV_FILE}` file containing the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
 
-    ```console
-    export SENZING_ENGINE_CONFIGURATION_JSON_FILE=~/senzing-engine-configuration.json
-    ```
+   Example `${SENZING_DOCKER_ENV_FILE}` file contents:
 
-1. Create `${SENZING_ENGINE_CONFIGURATION_JSON_FILE}`
-   containing Senzing Engine Configuration JSON.
-
-   **Note:** All JSON values must relative to *inside* the Docker container.
-   For instance, the database hostname specified in `SQL`.`CONNECTION`
-   cannot be `localhost` nor `127.0.0.1`.
-   The paths are relative to the Senzing installation *inside* the container,
-   not on the system hosting the Docker containers.
-
-   Example `${SENZING_ENGINE_CONFIGURATION_JSON_FILE}` contents:
-
-    ```json
-    {
-        "PIPELINE": {
-            "CONFIGPATH": "/etc/opt/senzing",
-            "LICENSESTRINGBASE64": "",
-            "RESOURCEPATH": "/opt/senzing/g2/resources",
-            "SUPPORTPATH": "/opt/senzing/data"
-        },
-        "SQL": {
-            "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
-        }
-    }
-    ```
-
-    ```json
-    {
-        \"PIPELINE\": {
-            \"CONFIGPATH\": \"/etc/opt/senzing\",
-            \"LICENSESTRINGBASE64\": \"\",
-            \"RESOURCEPATH\": \"/opt/senzing/g2/resources\",
-            \"SUPPORTPATH\": \"/opt/senzing/data\"
-        },
-        \"SQL\": {
-            \"CONNECTION\": \"postgresql://postgres:postgres@senzing-postgres:5432:G2/\"
-        }
-    }
-    ```
-
-1. Create environment variable:
-   Example:
-
-    ```console
-    export SENZING_ENGINE_CONFIGURATION_JSON=$(cat ${SENZING_ENGINE_CONFIGURATION_JSON_FILE})
-    ```
+   ```console
+   SENZING_ENGINE_CONFIGURATION_JSON={"PIPELINE": {"CONFIGPATH": "/etc/opt/senzing", "LICENSESTRINGBASE64": "", "RESOURCEPATH": "/opt/senzing/g2/resources", "SUPPORTPATH": "/opt/senzing/data" }, "SQL": {"CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"}}
+   ```
 
 ### Run docker container
 
@@ -149,8 +103,7 @@ which demonstrates the combination of two projects:
 
     ```console
     sudo docker run \
-      --env SENZING_ENGINE_CONFIGURATION_JSON=${SENZING_ENGINE_CONFIGURATION_JSON} \
-      --name senzing-web-app-demo \
+      --env-file ${SENZING_DOCKER_ENV_FILE} \
       --publish 8250:8250 \
       --publish 8251:8251 \
       --rm \
