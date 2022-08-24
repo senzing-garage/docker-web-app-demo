@@ -103,7 +103,7 @@ which demonstrates the combination of two projects:
     sudo --preserve-env docker-compose up
     ```
 
-1. [View results](#view-results).
+1. [View services](#view-services).
 
 ## Demonstrate using Docker
 
