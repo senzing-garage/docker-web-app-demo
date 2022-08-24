@@ -21,7 +21,7 @@ which demonstrates the combination of two projects:
     1. [Pre-requisites](#pre-requisites)
     1. [Create Docker.env file with Senzing Engine configuration](#create-docker-env-file-with-senzing-engine-configuration)
     1. [Run Docker container](#run-docker-container)
-1. [View results](#view-results)
+1. [View services](#view-services)
     1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
     1. [View Senzing API Server](#view-senzing-api-server)
 1. [Develop](#develop)
@@ -188,7 +188,7 @@ which demonstrates the combination of two projects:
       senzing/web-app-demo
     ```
 
-## View results
+## View services
 
 ### View Senzing Entity Search WebApp
 
