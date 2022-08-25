@@ -47,6 +47,8 @@ for Docker image construction, but is easy to use.
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
 1. [Advanced](#advanced)
+    1. [Related artifacts](#related-artifacts)
+    1. [Container Signature Verification](#container-signature-verification)
 1. [Errors](#errors)
 1. [References](#references)
 
