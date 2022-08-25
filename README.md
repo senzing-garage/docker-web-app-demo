@@ -227,12 +227,11 @@ View results from Senzing REST API server.
 The server supports the
 [Senzing REST API](https://github.com/Senzing/senzing-rest-api-specification).
 
-1. The
-   [OpenApi Editor](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml)
-   with **Servers** value of [http://localhost:8250](http://localhost:8250)
-   can be used to try the Senzing REST API.
 1. Example Senzing REST API request:
    [localhost:8250/heartbeat](http://localhost:8250/heartbeat)
+1. To try the Senzing REST API, open the
+   [OpenApi Editor](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml)
+    1. Set **Servers** value to [http://localhost:8250](http://localhost:8250)
 
 ## Develop
 
