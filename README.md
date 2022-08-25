@@ -30,16 +30,14 @@ for Docker image construction, but is easy to use.
    [Demonstrate using Docker](#demonstrate-using-docker)
    for more details.
 
-## Details and alternatives
-
-### Contents
+## Contents
 
 1. [Expectations](#expectations)
-1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Pre-requisites](#pre-requisites)
     1. [Create Docker.env file with Senzing Engine configuration](#create-docker-env-file-with-senzing-engine-configuration)
     1. [Run Docker container](#run-docker-container)
+1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [View services](#view-services)
     1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
     1. [View Senzing API Server](#view-senzing-api-server)
