@@ -86,7 +86,7 @@ for Docker image construction, but is easy to use.
 
 ### Create Docker .env file with Senzing Engine configuration
 
-1. Construct the Senzing Engine configuration JSON.
+1. Construct the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
 
    **Note:** All JSON values must relative to *inside* the Docker container.
    For instance, the database hostname specified in `SQL`.`CONNECTION`
@@ -120,11 +120,13 @@ for Docker image construction, but is easy to use.
    export SENZING_DOCKER_ENV_FILE=~/senzing.env
    ```
 
-1. :pencil2: Create the `${SENZING_DOCKER_ENV_FILE}` file.
+1. Create the `${SENZING_DOCKER_ENV_FILE}` file.
    Example:
 
     ```console
-    echo "SENZING_ENGINE_CONFIGURATION_JSON=${SENZING_ENGINE_CONFIGURATION_JSON}"| sed -e ':a;N;$!ba;s/\n//g' > ${SENZING_DOCKER_ENV_FILE}
+    echo "SENZING_ENGINE_CONFIGURATION_JSON=${SENZING_ENGINE_CONFIGURATION_JSON}" \
+        | sed -e ':a;N;$!ba;s/\n//g' \
+        > ${SENZING_DOCKER_ENV_FILE}
     ```
 
 ### Run docker container
