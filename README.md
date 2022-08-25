@@ -9,7 +9,7 @@ which demonstrates the combination of two projects:
 1. [entity-search-web-app](https://github.com/Senzing/entity-search-web-app)
 
 It is called a "convenience docker image" because it doesn't follow all of the best practices
-for Docker image construction, but is easy to use.
+for Docker image construction, but is easy to use in demonstrations.
 
 ## Overview
 
