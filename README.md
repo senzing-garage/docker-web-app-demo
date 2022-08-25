@@ -97,6 +97,7 @@ for Docker image construction, but is easy to use.
    Example:
 
     ```json
+    export SENZING_ENGINE_CONFIGURATION_JSON='
     {
         "PIPELINE": {
             "CONFIGPATH": "/etc/opt/senzing",
@@ -108,6 +109,8 @@ for Docker image construction, but is easy to use.
             "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
         }
     }
+    '
+    ```
 
 1. :pencil2: Specify a file to be used as
    [Docker --env-file](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file).
