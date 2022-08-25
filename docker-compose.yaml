@@ -1,0 +1,85 @@
+version: '3'
+services:
+
+  postgres:
+    container_name: senzing-postgres
+    environment:
+#     See https://github.com/bitnami/bitnami-docker-postgresql#configuration
+      POSTGRESQL_DATABASE: ${POSTGRES_DB:-G2}
+      POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD:-senzing}
+      POSTGRESQL_POSTGRES_PASSWORD: ${POSTGRESQL_POSTGRES_PASSWORD:-postgres}
+      POSTGRESQL_USERNAME: ${POSTGRES_USERNAME:-senzing}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USERNAME:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    image: bitnami/postgresql:${SENZING_DOCKER_IMAGE_VERSION_BITNAMI_POSTGRESQL:-latest}
+    networks:
+      - senzing
+    ports:
+      - 5432:5432
+    restart: always
+    user: "${SENZING_UID:-1001}:0"
+    volumes:
+      - ${POSTGRES_DIR:-/var/lib/postgresql/data}:/bitnami/postgresql
+
+  init-postgresql:
+    container_name: senzing-init-postgresql
+    depends_on:
+      - postgres
+    environment:
+      LC_CTYPE: en_US.utf8
+#     See https://github.com/Senzing/init-postgresql#configuration
+      SENZING_ENGINE_CONFIGURATION_JSON: >-
+        {
+          "PIPELINE": {
+            "CONFIGPATH": "/etc/opt/senzing",
+            "LICENSESTRINGBASE64": "${SENZING_LICENSE_BASE64_ENCODED}",
+            "RESOURCEPATH": "/opt/senzing/g2/resources",
+            "SUPPORTPATH": "/opt/senzing/data"
+          },
+          "SQL": {
+            "CONNECTION": "postgresql://${POSTGRES_USERNAME:-postgres}:${POSTGRES_PASSWORD:-postgres}@${POSTGRES_HOST:-senzing-postgres}:${POSTGRES_PORT:-5432}:${POSTGRES_DB:-G2}/"
+          }
+        }
+      SENZING_SUBCOMMAND: mandatory
+    image: senzing/init-postgresql:${SENZING_DOCKER_IMAGE_VERSION_INIT_POSTGRESQL:-latest}
+    networks:
+      - senzing
+    read_only: true
+    restart: on-failure
+
+  web-app-demo:
+    container_name: senzing-web-app-demo
+    depends_on:
+      - postgres
+    environment:
+#     See https://github.com/Senzing/docker-web-app-demo#configuration
+      SENZING_ENGINE_CONFIGURATION_JSON: >-
+        {
+          "PIPELINE": {
+            "CONFIGPATH": "/etc/opt/senzing",
+            "LICENSESTRINGBASE64": "${SENZING_LICENSE_BASE64_ENCODED}",
+            "RESOURCEPATH": "/opt/senzing/g2/resources",
+            "SUPPORTPATH": "/opt/senzing/data"
+          },
+          "SQL": {
+            "CONNECTION": "postgresql://${POSTGRES_USERNAME:-postgres}:${POSTGRES_PASSWORD:-postgres}@${POSTGRES_HOST:-senzing-postgres}:${POSTGRES_PORT:-5432}:${POSTGRES_DB:-G2}/"
+          }
+        }
+    image: senzing/web-app-demo:${SENZING_DOCKER_IMAGE_VERSION_WEB_APP_DEMO:-latest}
+    networks:
+      - senzing
+    ports:
+      - 8250:8250
+      - 8251:8251
+      - 8257:8257
+    read_only: true
+    restart: on-failure
+    tmpfs:
+      - /tmp
+
+networks:
+  senzing:
+    name: ${SENZING_DOCKER_NETWORK:-senzing-network}

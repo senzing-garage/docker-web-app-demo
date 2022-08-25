@@ -1,46 +1,54 @@
 # docker-web-app-demo
 
-## Overview
+## Synopsis
 
-This repository is used to create the `senzing/web-app-demo` docker image
+This repository is used to create a "convenience" `senzing/web-app-demo` docker image
 which demonstrates the combination of two projects:
 
 1. [senzing-poc-server](https://github.com/Senzing/senzing-poc-server)
 1. [entity-search-web-app](https://github.com/Senzing/entity-search-web-app)
 
-The result is that a user can run the docker container using a local
-[/opt/senzing](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/create-senzing-dir.md)
-and visualize results with the "Entity Search Web App".
+It is called a "convenience docker image" because it doesn't follow all of the best practices
+for Docker image construction, but is easy to use in demonstrations.
 
-### Related artifacts
+## Overview
 
-1. DockerHub
-    1. [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
-    1. [senzing/web-app-demo-unstable](https://hub.docker.com/r/senzing/web-app-demo-unstable)
+1. It's as simple as...
 
-### Contents
+    ```console
+    docker run \
+      --env-file senzing.env \
+      --publish 8250:8250 \
+      --publish 8251:8251 \
+      senzing/web-app-demo
+    ```
+
+1. ...and view Senzing Entity Search WebApp at
+   [localhost:8251](http://localhost:8251).
+
+1. See
+   [Demonstrate using Docker](#demonstrate-using-docker)
+   for more details.
+
+## Contents
 
 1. [Expectations](#expectations)
-    1. [Space](#space)
-    1. [Time](#time)
-    1. [Background knowledge](#background-knowledge)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
-    1. [Initialize Senzing](#initialize-senzing)
-    1. [Configuration](#configuration)
-    1. [Volumes](#volumes)
-    1. [Docker network](#docker-network)
-    1. [Docker user](#docker-user)
-    1. [External database](#external-database)
-    1. [Database support](#database-support)
-    1. [Run docker container](#run-docker-container)
+    1. [Pre-requisites](#pre-requisites)
+    1. [Create Docker.env file with Senzing Engine configuration](#create-docker-env-file-with-senzing-engine-configuration)
+    1. [Run Docker container](#run-docker-container)
+1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
+1. [View services](#view-services)
+    1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
+    1. [View Senzing API Server](#view-senzing-api-server)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
 1. [Advanced](#advanced)
+    1. [Related artifacts](#related-artifacts)
     1. [Container Signature Verification](#container-signature-verification)
-1. [Troubleshooting](#troubleshooting)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -54,205 +62,182 @@ and visualize results with the "Entity Search Web App".
 
 ## Expectations
 
-### Space
-
-This repository and demonstration require 6 GB free disk space.
-
-### Time
-
-Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
-
-### Background knowledge
-
-This repository assumes a working knowledge of:
-
-1. [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+- **Space:** This repository and demonstration require 6 GB free disk space.
+- **Time:** Budget 15 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+- **Background knowledge:** This repository assumes a working knowledge of:
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Docker-compose](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker-compose.md)
 
 ## Demonstrate using Docker
 
-### Initialize Senzing
+### Pre-requisites
 
-1. If Senzing has not been initialized, visit
-   "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/initialize-senzing-with-docker.md)".
+1. A database that has been populated with the Senzing schema and Senzing configuration.
 
-### Configuration
+1. :thinking: Alternatively, a demonstration database can be provisioned
+   by following the instructions at
+   [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
+   using this variation of the `docker-compose up` command:
 
-Configuration values specified by environment variable or command line parameter.
+    ```console
+    cd ${SENZING_DEMO_DIR}
+    sudo --preserve-env docker-compose up postgres init-postgresql
+    ```
 
-- **[SENZING_DATA_VERSION_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_version_dir)**
-- **[SENZING_DATABASE_URL](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_database_url)**
-- **[SENZING_DEBUG](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_debug)**
-- **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_etc_dir)**
-- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_g2_dir)**
-- **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_network)**
-- **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_runas_user)**
-- **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_var_dir)**
+### Create Docker .env file with Senzing Engine configuration
 
-### Volumes
+1. Construct the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
 
-1. :pencil2: Specify the directory containing the Senzing installation.
-   Use the same `SENZING_VOLUME` value used when performing
-   "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/initialize-senzing-with-docker.md)".
+   **Note:** All JSON values must relative to *inside* the Docker container.
+   For instance, the database hostname specified in `SQL`.`CONNECTION`
+   cannot be `localhost` nor `127.0.0.1`.
+   The paths are relative to the Senzing installation *inside* the container,
+   not on the system hosting the Docker containers.
+
    Example:
 
     ```console
-    export SENZING_VOLUME=/opt/my-senzing
+    export SENZING_ENGINE_CONFIGURATION_JSON='
+    {
+        "PIPELINE": {
+            "CONFIGPATH": "/etc/opt/senzing",
+            "LICENSESTRINGBASE64": "",
+            "RESOURCEPATH": "/opt/senzing/g2/resources",
+            "SUPPORTPATH": "/opt/senzing/data"
+        },
+        "SQL": {
+            "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
+        }
+    }
+    '
     ```
 
-    1. Here's a simple test to see if `SENZING_VOLUME` is correct.
-       The following commands should return file contents.
-       Example:
+1. :pencil2: Specify a file to be used as
+   [Docker --env-file](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file).
+   Example:
 
-        ```console
-        cat ${SENZING_VOLUME}/g2/g2BuildVersion.json
-        cat ${SENZING_VOLUME}/data/3.0.0/libpostal/data_version
-        ```
+   ```console
+   export SENZING_DOCKER_ENV_FILE=~/senzing.env
+   ```
 
-    1. :warning:
-       **macOS** - [File sharing](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/share-directories-with-docker.md#macos)
-       must be enabled for `SENZING_VOLUME`.
-    1. :warning:
-       **Windows** - [File sharing](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/share-directories-with-docker.md#windows)
-       must be enabled for `SENZING_VOLUME`.
-
-1. Identify the `data_version`, `etc`, `g2`, and `var` directories.
+1. Create the `${SENZING_DOCKER_ENV_FILE}` file.
    Example:
 
     ```console
-    export SENZING_DATA_VERSION_DIR=${SENZING_VOLUME}/data/3.0.0
-    export SENZING_ETC_DIR=${SENZING_VOLUME}/etc
-    export SENZING_G2_DIR=${SENZING_VOLUME}/g2
-    export SENZING_VAR_DIR=${SENZING_VOLUME}/var
+    echo "SENZING_ENGINE_CONFIGURATION_JSON=${SENZING_ENGINE_CONFIGURATION_JSON}" \
+        | sed -e ':a;N;$!ba;s/\n//g' \
+        > ${SENZING_DOCKER_ENV_FILE}
     ```
-
-### Docker network
-
-:thinking: **Optional:**  Use if docker container is part of a docker network.
-
-1. List docker networks.
-   Example:
-
-    ```console
-    sudo docker network ls
-    ```
-
-1. :pencil2: Specify docker network.
-   Choose value from NAME column of `docker network ls`.
-   Example:
-
-    ```console
-    export SENZING_NETWORK=*nameofthe_network*
-    ```
-
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
-    ```
-
-### Docker user
-
-:thinking: **Optional:**  The docker container runs as "USER 1001".
-Use if a different userid (UID) is required.
-
-1. :pencil2: Manually identify user.
-   User "0" is root.
-   Example:
-
-    ```console
-    export SENZING_RUNAS_USER="0"
-    ```
-
-   Another option, use current user.
-   Example:
-
-    ```console
-    export SENZING_RUNAS_USER=$(id -u)
-    ```
-
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_RUNAS_USER_PARAMETER="--user ${SENZING_RUNAS_USER}"
-    ```
-
-### External database
-
-:thinking: **Optional:**  Use if storing data in an external database.
-If not specified, the internal SQLite database will be used.
-
-1. :pencil2: Specify database.
-   Example:
-
-    ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
-    export DATABASE_HOST=senzing-postgresql
-    export DATABASE_PORT=5432
-    export DATABASE_DATABASE=G2
-    ```
-
-1. Construct Database URL.
-   Example:
-
-    ```console
-    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
-    ```
-
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_DATABASE_URL_PARAMETER="--env SENZING_DATABASE_URL=${SENZING_DATABASE_URL}"
-    ```
-
-### Database support
-
-:thinking: **Optional:**  Some database need additional support.
-For other databases, these steps may be skipped.
-
-1. **Db2:** See
-   [Support Db2](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/support-db2.md)
-   instructions to set `SENZING_OPT_IBM_DIR_PARAMETER`.
-1. **MS SQL:** See
-   [Support MS SQL](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/support-mssql.md)
-   instructions to set `SENZING_OPT_MICROSOFT_DIR_PARAMETER`.
 
 ### Run docker container
+
+1. :thinking: If using docker-compose to bring up a database stack,
+   set the `--net` parameter for use in `docker run`.
+   Example:
+
+    ```console
+    export SENZING_NETWORK_PARAMETER="--net senzing-network"
+    ```
 
 1. Run docker container.
    Example:
 
     ```console
     sudo docker run \
-      --detach \
+      --env-file ${SENZING_DOCKER_ENV_FILE} \
       --name senzing-web-app-demo \
       --publish 8250:8250 \
       --publish 8251:8251 \
-      --restart always \
-      --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
-      --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
-      --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
-      ${SENZING_RUNAS_USER_PARAMETER} \
-      ${SENZING_DATABASE_URL_PARAMETER} \
+      --rm \
       ${SENZING_NETWORK_PARAMETER} \
-      ${SENZING_OPT_IBM_DIR_PARAMETER} \
-      ${SENZING_OPT_MICROSOFT_DIR_PARAMETER} \
       senzing/web-app-demo
     ```
 
-1. "Entity Search Web App" can be viewed at [localhost:8251](http://localhost:8251), since 8251 was the published port.
+1. [View services](#view-services).
 
-1. To stop container. Example:
+## Demonstrate using docker-compose
+
+The following instructions bring up a docker-compose stack consisting of
+a demonstration PostgreSQL database and `senzing/web-app-demo`.
+It is meant for quick demonstration purposes,
+not for production.
+
+1. :pencil2: Specify where to store demonstration data.
+   Example:
 
     ```console
-    sudo docker container kill senzing-web-app-demo
-    sudo docker container rm   senzing-web-app-demo
+    export SENZING_DEMO_DIR=~/my-senzing-demo
     ```
+
+1. Set environment variables used in `docker-compose.yaml` file.
+   Example:
+
+    ```console
+    export POSTGRES_DIR=${SENZING_DEMO_DIR}/postgres
+    export SENZING_UID=$(id -u)
+    ```
+
+1. Setup demonstration directory.
+   Example:
+
+    ```console
+    mkdir -p ${POSTGRES_DIR}
+    chmod -R 755 ${POSTGRES_DIR}
+    ```
+
+1. Set environment variables for Docker image tags used in `docker-compose.yaml` file.
+   Example:
+
+    ```console
+    curl -X GET \
+        --output ${SENZING_DEMO_DIR}/docker-versions-stable.sh \
+        https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-stable.sh
+    source ${SENZING_DEMO_DIR}/docker-versions-stable.sh
+    ```
+
+1. Download `docker-compose.yaml` and Docker images.
+   Example:
+
+    ```console
+    curl -X GET \
+        --output ${SENZING_DEMO_DIR}/docker-compose.yaml \
+        "https://raw.githubusercontent.com/Senzing/docker-web-app-demo/main/docker-compose.yaml"
+    cd ${SENZING_DEMO_DIR}
+    sudo --preserve-env docker-compose pull
+    ```
+
+1. Bring up Senzing docker-compose stack.
+   Example:
+
+    ```console
+    cd ${SENZING_DEMO_DIR}
+    sudo --preserve-env docker-compose up
+    ```
+
+## View services
+
+### View Senzing Entity Search WebApp
+
+1. Senzing Entity Search WebApp is viewable at
+   [localhost:8251](http://localhost:8251).
+1. See
+   [entity-search-web-app](https://github.com/Senzing/entity-search-web-app)
+   for more details.
+
+### View Senzing API Server
+
+View results from Senzing REST API server.
+The server supports the
+[Senzing REST API](https://github.com/Senzing/senzing-rest-api-specification).
+
+1. Example Senzing REST API request:
+   [localhost:8250/heartbeat](http://localhost:8250/heartbeat)
+1. To try the Senzing REST API, open the
+   [OpenApi Editor](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml)
+    1. Set **Servers** value to [http://localhost:8250](http://localhost:8250)
+1. See
+   [senzing-api-server](https://github.com/Senzing/senzing-api-server)
+   for more details.
 
 ## Develop
 
@@ -308,26 +293,12 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
 
 ## Examples
 
-## Troubleshooting
-
-### Database connectivity
-
-The [Senzing POC Server](https://github.com/Senzing/senzing-poc-server)
-gets database connection information from `${SENZING_ETC_DIR}/G2Module.ini`.
-Make sure the `CONNECTION` information identifies the correct database.
-Example:
-
-```ini
-[PIPELINE]
-SUPPORTPATH = /opt/senzing/data
-CONFIGPATH = /etc/opt/senzing
-RESOURCEPATH = /opt/senzing/g2/resources
-
-[SQL]
-CONNECTION = postgresql://username:password@my-database.example.com:5432:G2/
-```
-
 ## Advanced
+
+### Related artifacts
+
+1. DockerHub
+    1. [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
 
 ### Container Signature Verification
 
@@ -337,7 +308,8 @@ To verify Senzing's dockerhub images, first copy the hash of the docker image pu
 ![dockerhub hash](assets/dockerhub_hash.png)
 
 Then verify the hash using cosign.
-```
+
+```console
 COSIGN_EXPERIMENTAL=1 cosign verify senzing/web-app-demo@sha256:<insert sha256 hash>
 ```
 
