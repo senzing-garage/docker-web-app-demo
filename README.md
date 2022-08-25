@@ -220,6 +220,9 @@ not for production.
 
 1. Senzing Entity Search WebApp is viewable at
    [localhost:8251](http://localhost:8251).
+1. See
+   [entity-search-web-app](https://github.com/Senzing/entity-search-web-app)
+   for more details.
 
 ### View Senzing API Server
 
@@ -232,6 +235,9 @@ The server supports the
 1. To try the Senzing REST API, open the
    [OpenApi Editor](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Senzing/senzing-rest-api-specification/main/senzing-rest-api.yaml)
     1. Set **Servers** value to [http://localhost:8250](http://localhost:8250)
+1. See
+   [senzing-api-server](https://github.com/Senzing/senzing-api-server)
+   for more details.
 
 ## Develop
 
