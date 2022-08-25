@@ -153,7 +153,14 @@ for Docker image construction, but is easy to use.
       senzing/web-app-demo
     ```
 
+1. [View services](#view-services).
+
 ## Demonstrate using docker-compose
+
+The following instructions bring up a docker-compose stack consisting of
+a demonstration PostgreSQL database and `senzing/web-app-demo`.
+It is meant for quick demonstration purposes,
+not for production.
 
 1. :pencil2: Specify where to store demonstration data.
    Example:
@@ -206,8 +213,6 @@ for Docker image construction, but is easy to use.
     cd ${SENZING_DEMO_DIR}
     sudo --preserve-env docker-compose up
     ```
-
-1. [View services](#view-services).
 
 ## View services
 
