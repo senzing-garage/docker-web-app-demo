@@ -120,15 +120,12 @@ for Docker image construction, but is easy to use.
    export SENZING_DOCKER_ENV_FILE=~/senzing.env
    ```
 
-1. :pencil2: Create the `${SENZING_DOCKER_ENV_FILE}` file, similar to
-   [senzing.env](docs/senzing.env),
-   containing the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
+1. :pencil2: Create the `${SENZING_DOCKER_ENV_FILE}` file.
+   Example:
 
-   Example `${SENZING_DOCKER_ENV_FILE}` file contents:
-
-   ```console
-   SENZING_ENGINE_CONFIGURATION_JSON={"PIPELINE": {"CONFIGPATH": "/etc/opt/senzing", "LICENSESTRINGBASE64": "", "RESOURCEPATH": "/opt/senzing/g2/resources", "SUPPORTPATH": "/opt/senzing/data" }, "SQL": {"CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"}}
-   ```
+    ```console
+    echo "SENZING_ENGINE_CONFIGURATION_JSON=${SENZING_ENGINE_CONFIGURATION_JSON}"| sed -e ':a;N;$!ba;s/\n//g' > ${SENZING_DOCKER_ENV_FILE}
+    ```
 
 ### Run docker container
 
@@ -209,8 +206,6 @@ for Docker image construction, but is easy to use.
     ```
 
 1. [View services](#view-services).
-
-
 
 ## View services
 
