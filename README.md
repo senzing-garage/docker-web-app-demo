@@ -295,6 +295,25 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
 1. DockerHub
     1. [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
 
+## Advanced
+
+### Container Signature Verification
+
+Container image integrity has become increasingly important as images are being deployed into zero-trust environments. The image integrity is achieved by container signatures. They provide developers with cryptographic assurance that the images they are pulling in are from a trusted source.
+
+To verify Senzing's dockerhub images, first copy the hash of the docker image pulled.
+![dockerhub hash](assets/dockerhub_hash.png)
+
+Then verify the hash using cosign.
+```
+COSIGN_EXPERIMENTAL=1 cosign verify senzing/web-app-demo@sha256:<insert sha256 hash>
+```
+
+This is what a successful verification looks like.
+![cosign verify](assets/cosign_verify.png)
+
+To learn more about cosign and how to install, go [here](https://github.com/sigstore/cosign).
+
 ## Errors
 
 1. See [docs/errors.md](docs/errors.md).
