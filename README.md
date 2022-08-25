@@ -96,7 +96,7 @@ for Docker image construction, but is easy to use.
 
    Example:
 
-    ```bash
+    ```console
     export SENZING_ENGINE_CONFIGURATION_JSON='
     {
         "PIPELINE": {
