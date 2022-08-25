@@ -2,11 +2,14 @@
 
 ## Synopsis
 
-This repository is used to create the `senzing/web-app-demo` docker image
+This repository is used to create a "convenience" `senzing/web-app-demo` docker image
 which demonstrates the combination of two projects:
 
 1. [senzing-poc-server](https://github.com/Senzing/senzing-poc-server)
 1. [entity-search-web-app](https://github.com/Senzing/entity-search-web-app)
+
+It is called a "convenience docker image" because it doesn't follow all of the best practices
+for Docker image construction, but is easy to use.
 
 ## Overview
 
