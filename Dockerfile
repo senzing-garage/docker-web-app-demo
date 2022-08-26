@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzingapi-runtime:3.1.2
+ARG BASE_IMAGE=senzing/senzingapi-runtime:3.2.0
 FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2022-08-25
