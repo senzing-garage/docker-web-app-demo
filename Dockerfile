@@ -5,7 +5,7 @@ ENV REFRESHED_AT=2022-08-25
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
-      Version="2.4.0"
+      Version="2.4.1"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
