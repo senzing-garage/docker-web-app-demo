@@ -51,6 +51,7 @@ for Docker image construction, but is easy to use in demonstrations.
     1. [Container Signature Verification](#container-signature-verification)
 1. [Errors](#errors)
 1. [References](#references)
+1. [License](#license)
 
 ### Legend
 
@@ -323,3 +324,24 @@ To learn more about cosign and how to install, go [here](https://github.com/sigs
 1. See [docs/errors.md](docs/errors.md).
 
 ## References
+
+## License
+
+View
+[license information](https://senzing.com/end-user-license-agreement/)
+for the software container in this Docker image.
+Note that this license does not permit further distribution.
+
+This Docker image may also contain software from the
+[Senzing GitHub community](https://github.com/Senzing/)
+under the
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+Further, as with all Docker images,
+this likely also contains other software which may be under other licenses
+(such as Bash, etc. from the base distribution,
+along with any direct or indirect dependencies of the primary software being contained).
+
+As for any pre-built image usage,
+it is the image user's responsibility to ensure that any use of this image complies
+with any relevant licenses for all software contained within.
