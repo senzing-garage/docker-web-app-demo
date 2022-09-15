@@ -14,7 +14,7 @@ for Docker image construction, but is easy to use in demonstrations.
 
 ## Overview
 
-1. It's as simple as...
+1. It's as simple as setting `SENZING_ENGINE_CONFIGURATION_JSON`, running...
 
     ```console
     docker run \
@@ -24,7 +24,7 @@ for Docker image construction, but is easy to use in demonstrations.
       senzing/web-app-demo
     ```
 
-1. ...and view Senzing Entity Search WebApp at
+1. ...and viewing Senzing Entity Search WebApp at
    [localhost:8251](http://localhost:8251).
 
 1. See
