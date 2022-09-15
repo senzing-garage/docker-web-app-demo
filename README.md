@@ -136,8 +136,7 @@ describing where we can improve.   Now on with the show...
 ## Demonstrate using docker-compose
 
 1. Deploy the
-   [Backing Services](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose)
-   required by the Stream Loader.
+   [Backing Services](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose).
 
 1. Specify a directory to place artifacts in.
    Example:
