@@ -2,7 +2,8 @@
 
 ## Synopsis
 
-This repository is used to create a "convenience" `senzing/web-app-demo` docker image
+The [senzing/python-demo](https://hub.docker.com/r/senzing/python-demo)
+docker image is a "convenience" docker image
 which demonstrates the combination of two projects:
 
 1. [senzing-poc-server](https://github.com/Senzing/senzing-poc-server)
@@ -30,12 +31,12 @@ for Docker image construction, but is easy to use in demonstrations.
    [Demonstrate using Docker](#demonstrate-using-docker)
    for more details.
 
-## Contents
+### Contents
 
 1. [Expectations](#expectations)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Pre-requisites](#pre-requisites)
-    1. [Create Docker.env file with Senzing Engine configuration](#create-docker-env-file-with-senzing-engine-configuration)
+    1. [Set environment variables(#set-environment-variables)
     1. [Run Docker container](#run-docker-container)
 1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [View services](#view-services)
@@ -44,7 +45,7 @@ for Docker image construction, but is easy to use in demonstrations.
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
-    1. [Build docker image for development](#build-docker-image-for-development)
+    1. [Build Docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
 1. [Advanced](#advanced)
     1. [Related artifacts](#related-artifacts)
@@ -53,15 +54,27 @@ for Docker image construction, but is easy to use in demonstrations.
 1. [References](#references)
 1. [License](#license)
 
+### Preamble
+
+At [Senzing](http://senzing.com),
+we strive to create GitHub documentation in a
+"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
+For the most part, instructions are copy and paste.
+Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
+Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
+If the instructions are not clear, please let us know by opening a new
+[Documentation issue](https://github.com/Senzing/template-python/issues/new?template=documentation_request.md)
+describing where we can improve.   Now on with the show...
+
 ### Legend
 
 1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
-   Perhaps you'll need to make some choices.
+   Perhaps there are some choices to be made.
    Perhaps it's an optional step.
 1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
 1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
 
-## Expectations
+### Expectations
 
 - **Space:** This repository and demonstration require 6 GB free disk space.
 - **Time:** Budget 15 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
@@ -74,18 +87,10 @@ for Docker image construction, but is easy to use in demonstrations.
 ### Pre-requisites
 
 1. A database that has been populated with the Senzing schema and Senzing configuration.
+   For an example, visit
+   [Backing Services](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose)
 
-1. :thinking: Alternatively, a demonstration database can be provisioned
-   by following the instructions at
-   [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
-   using this variation of the `docker-compose up` command:
-
-    ```console
-    cd ${SENZING_DEMO_DIR}
-    sudo --preserve-env docker-compose up postgres init-postgresql
-    ```
-
-### Create Docker .env file with Senzing Engine configuration
+### Set environment variables
 
 1. Construct the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
 
@@ -113,44 +118,17 @@ for Docker image construction, but is easy to use in demonstrations.
     '
     ```
 
-1. :pencil2: Specify a file to be used as
-   [Docker --env-file](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file).
-   Example:
+### Run Docker container
 
-   ```console
-   export SENZING_DOCKER_ENV_FILE=~/senzing.env
-   ```
-
-1. Create the `${SENZING_DOCKER_ENV_FILE}` file.
-   Example:
-
-    ```console
-    echo "SENZING_ENGINE_CONFIGURATION_JSON=${SENZING_ENGINE_CONFIGURATION_JSON}" \
-        | sed -e ':a;N;$!ba;s/\n//g' \
-        > ${SENZING_DOCKER_ENV_FILE}
-    ```
-
-### Run docker container
-
-1. :thinking: If using docker-compose to bring up a database stack,
-   set the `--net` parameter for use in `docker run`.
-   Example:
-
-    ```console
-    export SENZING_NETWORK_PARAMETER="--net senzing-network"
-    ```
-
-1. Run docker container.
+1. Run Docker container.
    Example:
 
     ```console
     sudo docker run \
-      --env-file ${SENZING_DOCKER_ENV_FILE} \
-      --name senzing-web-app-demo \
+      --env SENZING_ENGINE_CONFIGURATION_JSON \
       --publish 8250:8250 \
       --publish 8251:8251 \
       --rm \
-      ${SENZING_NETWORK_PARAMETER} \
       senzing/web-app-demo
     ```
 
@@ -158,61 +136,35 @@ for Docker image construction, but is easy to use in demonstrations.
 
 ## Demonstrate using docker-compose
 
-The following instructions bring up a docker-compose stack consisting of
-a demonstration PostgreSQL database and `senzing/web-app-demo`.
-It is meant for quick demonstration purposes,
-not for production.
+1. Deploy the
+   [Backing Services](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose)
+   required by the Stream Loader.
 
-1. :pencil2: Specify where to store demonstration data.
+1. Specify a directory to place artifacts in.
    Example:
 
     ```console
-    export SENZING_DEMO_DIR=~/my-senzing-demo
+    export SENZING_VOLUME=~/my-senzing
+    mkdir -p ${SENZING_VOLUME}
+
     ```
 
-1. Set environment variables used in `docker-compose.yaml` file.
-   Example:
-
-    ```console
-    export POSTGRES_DIR=${SENZING_DEMO_DIR}/postgres
-    export SENZING_UID=$(id -u)
-    ```
-
-1. Setup demonstration directory.
-   Example:
-
-    ```console
-    mkdir -p ${POSTGRES_DIR}
-    chmod -R 755 ${POSTGRES_DIR}
-    ```
-
-1. Set environment variables for Docker image tags used in `docker-compose.yaml` file.
+1. Download `docker-compose.yaml` file.
    Example:
 
     ```console
     curl -X GET \
-        --output ${SENZING_DEMO_DIR}/docker-versions-stable.sh \
-        https://raw.githubusercontent.com/Senzing/knowledge-base/main/lists/docker-versions-stable.sh
-    source ${SENZING_DEMO_DIR}/docker-versions-stable.sh
+      --output ${SENZING_VOLUME}/docker-compose.yaml \
+      https://raw.githubusercontent.com/Senzing/docker-web-app-demo/main/docker-compose.yaml
+
     ```
 
-1. Download `docker-compose.yaml` and Docker images.
+1. Bring up docker-compose stack.
    Example:
 
     ```console
-    curl -X GET \
-        --output ${SENZING_DEMO_DIR}/docker-compose.yaml \
-        "https://raw.githubusercontent.com/Senzing/docker-web-app-demo/main/docker-compose.yaml"
-    cd ${SENZING_DEMO_DIR}
-    sudo --preserve-env docker-compose pull
-    ```
+    docker-compose -f ${SENZING_VOLUME}/docker-compose.yaml up
 
-1. Bring up Senzing docker-compose stack.
-   Example:
-
-    ```console
-    cd ${SENZING_DEMO_DIR}
-    sudo --preserve-env docker-compose up
     ```
 
 ## View services
@@ -262,11 +214,12 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
     export GIT_REPOSITORY=docker-web-app-demo
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
+
     ```
 
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
-### Build docker image for development
+### Build Docker image for development
 
 1. **Option #1:** Using `docker` command and GitHub.
 
@@ -274,6 +227,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
     sudo docker build \
       --tag senzing/web-app-demo \
       https://github.com/senzing/docker-web-app-demo.git#main
+
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
@@ -281,6 +235,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
     ```console
     cd ${GIT_REPOSITORY_DIR}
     sudo docker build --tag senzing/web-app-demo .
+
     ```
 
 1. **Option #3:** Using `make` command.
@@ -288,9 +243,10 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
     ```console
     cd ${GIT_REPOSITORY_DIR}
     sudo make docker-build
+
     ```
 
-    Note: `sudo make docker-build-development-cache` can be used to create cached docker layers.
+    Note: `sudo make docker-build-development-cache` can be used to create cached Docker layers.
 
 ## Examples
 
