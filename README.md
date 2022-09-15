@@ -33,7 +33,6 @@ for Docker image construction, but is easy to use in demonstrations.
 
 ### Contents
 
-1. [Expectations](#expectations)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Pre-requisites](#pre-requisites)
     1. [Set environment variables](#set-environment-variables)
