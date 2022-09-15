@@ -36,7 +36,7 @@ for Docker image construction, but is easy to use in demonstrations.
 1. [Expectations](#expectations)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Pre-requisites](#pre-requisites)
-    1. [Set environment variables(#set-environment-variables)
+    1. [Set environment variables](#set-environment-variables)
     1. [Run Docker container](#run-docker-container)
 1. [Demonstrate using docker-compose](#demonstrate-using-docker-compose)
 1. [View services](#view-services)
@@ -124,7 +124,7 @@ describing where we can improve.   Now on with the show...
    Example:
 
     ```console
-    sudo docker run \
+    docker run \
       --env SENZING_ENGINE_CONFIGURATION_JSON \
       --publish 8250:8250 \
       --publish 8251:8251 \
