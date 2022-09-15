@@ -18,7 +18,7 @@ for Docker image construction, but is easy to use in demonstrations.
 
     ```console
     docker run \
-      --env-file senzing.env \
+      --env SENZING_ENGINE_CONFIGURATION_JSON \
       --publish 8250:8250 \
       --publish 8251:8251 \
       senzing/web-app-demo
