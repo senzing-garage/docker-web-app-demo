@@ -3,8 +3,6 @@ services:
 
   web-app-demo:
     container_name: senzing-web-app-demo
-    depends_on:
-      - postgres
     environment:
 #     See https://github.com/Senzing/docker-web-app-demo#configuration
       SENZING_ENGINE_CONFIGURATION_JSON: >-
