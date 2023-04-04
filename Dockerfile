@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=senzing/senzingapi-runtime:3.4.0
+ARG BASE_IMAGE=senzing/senzingapi-runtime:3.5.0
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2023-01-12
+ENV REFRESHED_AT=2023-04-03
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
-      Version="2.4.6"
+      Version="2.4.7"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -27,8 +27,8 @@ RUN apt-get update \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-poc-server:3.3.5     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
-COPY --from=senzing/entity-search-web-app:2.7.4  "/app/" "/app/"
+COPY --from=senzing/senzing-poc-server:3.3.9     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
+COPY --from=senzing/entity-search-web-app:2.8.0  "/app/" "/app/"
 
 # Copy files from repository.
 

@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.7] - 2023-04-04
+
+### Changed in 2.4.7
+
+- In `Dockerfile`:
+  - Updated FROM instruction to `senzing/senzingapi-runtime:3.5.0`
+  - Upgrade to `senzing/senzing-poc-server:3.3.9`
+  - Upgrade to `senzing/entity-search-web-app:2.8.0`
+
 ## [2.4.6] - 2023-01-12
 
 ### Changed in 2.4.6
