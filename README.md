@@ -41,7 +41,6 @@ for Docker image construction, but is easy to use in demonstrations.
 1. [View services](#view-services)
     1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
     1. [View Senzing API Server](#view-senzing-api-server)
-    1. [Container Signature Verification](#container-signature-verification)
 1. [License](#license)
 1. [References](#references)
 
@@ -170,24 +169,6 @@ The server supports the
    [senzing-api-server](https://github.com/Senzing/senzing-api-server)
    for more details.
 
-### Container Signature Verification
-
-Container image integrity has become increasingly important as images are being deployed into zero-trust environments. The image integrity is achieved by container signatures. They provide developers with cryptographic assurance that the images they are pulling in are from a trusted source.
-
-To verify Senzing's dockerhub images, first copy the hash of the docker image pulled.
-![dockerhub hash](assets/dockerhub_hash.png)
-
-Then verify the hash using cosign.
-
-```console
-COSIGN_EXPERIMENTAL=1 cosign verify senzing/web-app-demo@sha256:<insert sha256 hash>
-```
-
-This is what a successful verification looks like.
-![cosign verify](assets/cosign_verify.png)
-
-To learn more about cosign and how to install, go [here](https://github.com/sigstore/cosign).
-
 ## License
 
 View
@@ -216,3 +197,4 @@ with any relevant licenses for all software contained within.
 - [Examples](docs/examples.md)
 - Related artifacts
   - [DockerHub](https://hub.docker.com/r/senzing/web-app-demo)
+- [Verify container](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/verify-container.md)
