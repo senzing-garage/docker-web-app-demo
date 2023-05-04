@@ -41,29 +41,8 @@ for Docker image construction, but is easy to use in demonstrations.
 1. [View services](#view-services)
     1. [View Senzing Entity Search WebApp](#view-senzing-entity-search-webapp)
     1. [View Senzing API Server](#view-senzing-api-server)
-1. [Develop](#develop)
-    1. [Prerequisite software](#prerequisite-software)
-    1. [Clone repository](#clone-repository)
-    1. [Build Docker image for development](#build-docker-image-for-development)
-1. [Examples](#examples)
-1. [Advanced](#advanced)
-    1. [Related artifacts](#related-artifacts)
-    1. [Container Signature Verification](#container-signature-verification)
-1. [Errors](#errors)
-1. [References](#references)
 1. [License](#license)
-
-### Preamble
-
-At [Senzing](http://senzing.com),
-we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
-For the most part, instructions are copy and paste.
-Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
-Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
-If the instructions are not clear, please let us know by opening a new
-[Documentation issue](https://github.com/Senzing/template-python/issues/new?template=documentation_request.md)
-describing where we can improve.   Now on with the show...
+1. [References](#references)
 
 ### Legend
 
@@ -190,95 +169,6 @@ The server supports the
    [senzing-api-server](https://github.com/Senzing/senzing-api-server)
    for more details.
 
-## Develop
-
-### Prerequisite software
-
-The following software programs need to be installed:
-
-1. [git](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-git.md)
-1. [make](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-make.md)
-1. [docker](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-docker.md)
-
-### Clone repository
-
-For more information on environment variables,
-see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md).
-
-1. Set these environment variable values:
-
-    ```console
-    export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=docker-web-app-demo
-    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
-    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-
-    ```
-
-1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
-
-### Build Docker image for development
-
-1. **Option #1:** Using `docker` command and GitHub.
-
-    ```console
-    sudo docker build \
-      --tag senzing/web-app-demo \
-      https://github.com/senzing/docker-web-app-demo.git#main
-
-    ```
-
-1. **Option #2:** Using `docker` command and local repository.
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-    sudo docker build --tag senzing/web-app-demo .
-
-    ```
-
-1. **Option #3:** Using `make` command.
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-    sudo make docker-build
-
-    ```
-
-    Note: `sudo make docker-build-development-cache` can be used to create cached Docker layers.
-
-## Examples
-
-## Advanced
-
-### Related artifacts
-
-1. DockerHub
-    1. [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
-
-### Container Signature Verification
-
-Container image integrity has become increasingly important as images are being deployed into zero-trust environments. The image integrity is achieved by container signatures. They provide developers with cryptographic assurance that the images they are pulling in are from a trusted source.
-
-To verify Senzing's dockerhub images, first copy the hash of the docker image pulled.
-![dockerhub hash](assets/dockerhub_hash.png)
-
-Then verify the hash using cosign.
-
-```console
-COSIGN_EXPERIMENTAL=1 cosign verify senzing/web-app-demo@sha256:<insert sha256 hash>
-```
-
-This is what a successful verification looks like.
-![cosign verify](assets/cosign_verify.png)
-
-To learn more about cosign and how to install, go [here](https://github.com/sigstore/cosign).
-
-## Errors
-
-1. See [docs/errors.md](docs/errors.md).
-
-## References
-
 ## License
 
 View
@@ -299,3 +189,12 @@ along with any direct or indirect dependencies of the primary software being con
 As for any pre-built image usage,
 it is the image user's responsibility to ensure that any use of this image complies
 with any relevant licenses for all software contained within.
+
+## References
+
+- [Development](docs/development.md)
+- [Errors](docs/errors.md)
+- [Examples](docs/examples.md)
+- Related artifacts
+  - [DockerHub](https://hub.docker.com/r/senzing/web-app-demo)
+- [Verify container](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/verify-container.md)
