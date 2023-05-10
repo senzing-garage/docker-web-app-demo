@@ -13,7 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - In `Dockerfile`:
   - Updated FROM instruction to `senzing/senzingapi-runtime:3.5.2`
   - Upgrade to `senzing/senzing-poc-server:3.4.1`
-  - Upgrade to `senzing/entity-search-web-app:2.8.0`
 
 ## [2.4.7] - 2023-04-04
 
