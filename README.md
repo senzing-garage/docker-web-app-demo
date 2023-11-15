@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-The [senzing/python-demo](https://hub.docker.com/r/senzing/python-demo)
+The [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
 docker image is a "convenience" docker image
 which demonstrates the combination of two projects:
 
