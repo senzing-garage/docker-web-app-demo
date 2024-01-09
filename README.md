@@ -1,5 +1,17 @@
 # docker-web-app-demo
 
+If you are beginning your journey with
+[Senzing](https://senzing.com/),
+please start with
+[Senzing Quick Start guides](https://docs.senzing.com/quickstart/).
+
+You are in the
+[Senzing Garage](https://github.com/senzing-garage)
+where projects are "tinkered" on.
+Although this GitHub repository may help you understand an approach to using Senzing,
+it's not considered to be "production ready" and is not considered to be part of the Senzing product.
+Heck, it may not even be appropriate for your application of Senzing!
+
 ## Synopsis
 
 The [senzing/web-app-demo](https://hub.docker.com/r/senzing/web-app-demo)
@@ -57,8 +69,8 @@ for Docker image construction, but is easy to use in demonstrations.
 - **Space:** This repository and demonstration require 6 GB free disk space.
 - **Time:** Budget 15 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
-  - [Docker-compose](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker-compose.md)
+  - [Docker](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Docker-compose](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker-compose.md)
 
 ## Demonstrate using Docker
 
@@ -66,7 +78,7 @@ for Docker image construction, but is easy to use in demonstrations.
 
 1. A database that has been populated with the Senzing schema and Senzing configuration.
    For an example, visit
-   [Backing Services](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose)
+   [Backing Services](https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose)
 
 ### Set environment variables
 
@@ -115,7 +127,7 @@ for Docker image construction, but is easy to use in demonstrations.
 ## Demonstrate using docker-compose
 
 1. Deploy the
-   [Backing Services](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose).
+   [Backing Services](https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose).
 
 1. Specify a directory to place artifacts in.
    Example:
@@ -197,4 +209,4 @@ with any relevant licenses for all software contained within.
 - [Examples](docs/examples.md)
 - Related artifacts
   - [DockerHub](https://hub.docker.com/r/senzing/web-app-demo)
-- [Verify container](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/verify-container.md)
+- [Verify container](https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/verify-container.md)

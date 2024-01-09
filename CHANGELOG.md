@@ -244,7 +244,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed in 1.1.0
 
 - senzing/web-app-demo:1.1.0 pinned to:
-  - [senzing/senzing-base:1.2.1](https://github.com/Senzing/docker-senzing-base/tree/1.2.1)
+  - [senzing/senzing-base:1.2.1](https://github.com/senzing-garage/docker-senzing-base/tree/1.2.1)
   - [senzing/senzing-api-server:1.7.2](https://github.com/Senzing/senzing-api-server/tree/1.7.2)
   - [senzing/entity-search-web-app:1.0.2](https://github.com/Senzing/entity-search-web-app/tree/1.0.2)
 

@@ -1,4 +1,3 @@
----
 name: move-pr-to-done.yaml
 
 on:
@@ -7,6 +6,6 @@ on:
 
 jobs:
   move-pr-to-done:
-    uses: Senzing/build-resources/.github/workflows/move-pr-to-done.yaml@main
+    uses: senzing-factory/build-resources/.github/workflows/move-pr-to-done.yaml@main
     secrets:
       SENZING_GITHUB_PROJECT_RW_TOKEN: ${{ secrets.SENZING_GITHUB_PROJECT_RW_TOKEN }}
