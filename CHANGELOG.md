@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.14] - 2024-02-02
+
+### Changed in 2.4.14
+
+- In `Dockerfile`
+  - Upgrade to `senzing/senzing-poc-server:3.5.1`
 
 ## [2.4.13] - 2023-11-14
 
