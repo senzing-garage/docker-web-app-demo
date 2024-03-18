@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=senzing/senzingapi-runtime:3.8.0
+ARG BASE_IMAGE=senzing/senzingapi-runtime:3.9.0
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2024-02-02
+ENV REFRESHED_AT=2024-03-18
 
 LABEL Name="senzing/web-app-demo" \
-      Maintainer="support@senzing.com" \
-      Version="2.4.14"
+  Maintainer="support@senzing.com" \
+  Version="2.4.15"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -16,18 +16,18 @@ USER root
 # Install packages via apt-get.
 
 RUN apt-get update \
- && apt-get -y install \
-      default-jdk \
-      supervisor \
-      wget \
- && wget -qO - https://deb.nodesource.com/setup_12.x | bash - \
- && apt-get -y install \
-      nodejs \
- && rm -rf /var/lib/apt/lists/*
+  && apt-get -y install \
+  default-jdk \
+  supervisor \
+  wget \
+  && wget -qO - https://deb.nodesource.com/setup_12.x | bash - \
+  && apt-get -y install \
+  nodejs \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-poc-server:3.5.1     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
+COPY --from=senzing/senzing-poc-server:3.5.2     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
 COPY --from=senzing/entity-search-web-app:2.9.2  "/app/" "/app/"
 
 # Copy files from repository.
@@ -51,14 +51,14 @@ USER 1001
 # Runtime execution.
 
 ENV SENZING_API_SERVER_ALLOWED_ORIGINS="*" \
-    SENZING_API_SERVER_BIND_ADDR=all \
-    SENZING_API_SERVER_CONCURRENCY=8 \
-    SENZING_API_SERVER_ENABLE_ADMIN=true \
-    SENZING_API_SERVER_PORT=8250 \
-    SENZING_API_SERVER_URL="http://localhost:8250" \
-    SENZING_WEB_SERVER_ADMIN_AUTH_MODE=NONE \
-    SENZING_WEB_SERVER_PORT=8251 \
-    SENZING_WEB_SERVER_URL="http://localhost:8251"
+  SENZING_API_SERVER_BIND_ADDR=all \
+  SENZING_API_SERVER_CONCURRENCY=8 \
+  SENZING_API_SERVER_ENABLE_ADMIN=true \
+  SENZING_API_SERVER_PORT=8250 \
+  SENZING_API_SERVER_URL="http://localhost:8250" \
+  SENZING_WEB_SERVER_ADMIN_AUTH_MODE=NONE \
+  SENZING_WEB_SERVER_PORT=8251 \
+  SENZING_WEB_SERVER_URL="http://localhost:8251"
 
 WORKDIR /app
 CMD ["/usr/bin/supervisord", "--nodaemon"]
