@@ -1,7 +1,7 @@
-ARG BASE_IMAGE=senzing/senzingapi-runtime:3.8.0
+ARG BASE_IMAGE=senzing/senzingapi-runtime:3.9.0
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2024-02-02
+ENV REFRESHED_AT=2024-03-18
 
 LABEL Name="senzing/web-app-demo" \
       Maintainer="support@senzing.com" \
