@@ -23,7 +23,10 @@ RUN apt-get update \
   && wget -qO - https://deb.nodesource.com/setup_12.x | bash - \
   && apt-get -y install \
   nodejs \
-  && rm -rf /var/lib/apt/lists/*
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* \
+  && dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n | tail -n 100 \
+  && df -h
 
 # Copy files from other docker images.
 
