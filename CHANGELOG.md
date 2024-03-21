@@ -10,10 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed in 2.4.16
 
-## [2.4.15] - 2024-03-18
-
 - In `Dockerfile`
   - Upgrade to `senzing/senzing-poc-server:3.5.3`
+
+## [2.4.15] - 2024-03-18
 
 ### Changed in 2.4.15
 
