@@ -5,7 +5,7 @@ ENV REFRESHED_AT=2024-03-21
 
 LABEL Name="senzing/web-app-demo" \
   Maintainer="support@senzing.com" \
-  Version="2.4.17"
+  Version="2.5.0"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -30,7 +30,7 @@ RUN apt-get update \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-poc-server:3.5.4     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
+COPY --from=senzing/senzing-poc-server:3.4.8     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
 COPY --from=senzing/entity-search-web-app:2.9.2  "/app/" "/app/"
 
 # Copy files from repository.
