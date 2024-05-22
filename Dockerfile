@@ -1,11 +1,11 @@
 ARG BASE_IMAGE=senzing/senzingapi-runtime:3.9.0
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2024-03-21
+ENV REFRESHED_AT=2024-05-22
 
 LABEL Name="senzing/web-app-demo" \
   Maintainer="support@senzing.com" \
-  Version="2.5.0"
+  Version="2.4.18"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
