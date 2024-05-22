@@ -6,12 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.19] - 2024-05-22
+
+### Changed in 2.4.19
+
+- In `Dockerfile`
+  - Upgrade to `senzing/senzingapi-runtime:3.10.1`
+
 ## [2.4.18] - 2024-05-22
 
 ### Changed in 2.4.18
 
 - In `Dockerfile`
-  - Upgrade to `senzing/senzingapi-runtime:3.10.1`
+  - Downgrade to `senzing/senzing-poc-server:3.4.8` due to compatibility issue.
 
 ## [2.4.17] - 2024-03-21
 
