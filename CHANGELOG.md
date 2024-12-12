@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2024-12-12
+
+### Changed in 2.5.0
+
+- In `Dockerfile`
+  - Upgrade to `senzing/senzing-pog-server:3.6.4`
+  - Upgrade to `senzing/entity-search-web-app:3.0.0`
+- In `docker-compose.yaml`
+  - Add environment variables for datamart:
+    - `SENZING_DATA_MART_POSTGRESQL_HOST`
+    - `SENZING_DATA_MART_POSTGRESQL_PORT`
+    - `SENZING_DATA_MART_POSTGRESQL_DATABASE`
+    - `SENZING_DATA_MART_POSTGRESQL_USER`
+    - `SENZING_DATA_MART_POSTGRESQL_PASSWORD`
+- Update `README.md` with instructions for initializing data mart
+
 ## [2.4.20] - 2024-06-24
 
 ### Changed in 2.4.20

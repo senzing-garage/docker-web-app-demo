@@ -30,8 +30,8 @@ RUN apt-get update \
 
 # Copy files from other docker images.
 
-COPY --from=senzing/senzing-poc-server:3.4.8     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
-COPY --from=senzing/entity-search-web-app:2.9.2  "/app/" "/app/"
+COPY --from=senzing/senzing-poc-server:3.6.4     "/app/senzing-poc-server.jar" "/app/senzing-poc-server.jar"
+COPY --from=senzing/entity-search-web-app:3.0.0  "/app/" "/app/"
 
 # Copy files from repository.
 
