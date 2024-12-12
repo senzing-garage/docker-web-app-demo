@@ -26,17 +26,43 @@ for Docker image construction, but is easy to use in demonstrations.
 
 ## Overview
 
-1. It's as simple as setting `SENZING_ENGINE_CONFIGURATION_JSON`, running...
+1. First, set your environment variables:
+   ```
+   export SENZING_ENGINE_CONFIGURATION_JSON='{
+      "PIPELINE": {                          
+            "LICENSESTRINGBASE64": "",
+            "SUPPORTPATH": "/opt/senzing/data",
+            "RESOURCEPATH": "/opt/senzing/g2/resources",
+            "CONFIGPATH": "/etc/opt/senzing"
+      },
+      "SQL": {
+            "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2/"
+      }
+   }'
 
-    ```console
-    docker run \
+   export SENZING_DATA_MART_POSTGRESQL_HOST="senzing-postgres"
+   export SENZING_DATA_MART_POSTGRESQL_PORT="5432"
+   export SENZING_DATA_MART_POSTGRESQL_DATABASE="G2"
+   export SENZING_DATA_MART_POSTGRESQL_USER="postgres"
+   export SENZING_DATA_MART_POSTGRESQL_PASSWORD="postgres"
+   ```
+
+1. Then run the docker image using:
+   ```console
+   docker run \
       --env SENZING_ENGINE_CONFIGURATION_JSON \
+      --env SENZING_DATA_MART_POSTGRESQL_HOST \
+      --env SENZING_DATA_MART_POSTGRESQL_PORT \
+      --env SENZING_DATA_MART_POSTGRESQL_DATABASE \
+      --env SENZING_DATA_MART_POSTGRESQL_USER \
+      --env SENZING_DATA_MART_POSTGRESQL_PASSWORD \
       --publish 8250:8250 \
       --publish 8251:8251 \
+      --rm \
       senzing/web-app-demo
-    ```
+   ```
 
-1. ...and viewing Senzing Entity Search WebApp at
+1. Once the docker image is running, you can view the Senzing Entity Search WebApp at
    [localhost:8251](http://localhost:8251).
 
 1. See
@@ -80,6 +106,10 @@ for Docker image construction, but is easy to use in demonstrations.
    For an example, visit
    [Backing Services](https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/deploy-rabbitmq-postgresql-backing-services.md#using-docker-compose)
 
+1. A database for the data mart.  This may be unpopulated and if so, the schema will be laid down.
+   It may *also* be the same database used for the Senzing schema and Senzing configuration,
+   though performance may degrade if using SQLite.
+
 ### Set environment variables
 
 1. Construct the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
@@ -108,14 +138,32 @@ for Docker image construction, but is easy to use in demonstrations.
     '
     ```
 
+1. Set the Data Mart environment variables to the data mart repository can be found.
+   **NOTE**: When using any database other than SQLite, you may use the same database as with the `SENZING_ENGINE_CONFIGURATION_JSON` environment variable.
+
+   Example:
+
+    ```console
+    export SENZING_DATA_MART_POSTGRESQL_HOST="senzing-postgres"
+    export SENZING_DATA_MART_POSTGRESQL_PORT="5432"
+    export SENZING_DATA_MART_POSTGRESQL_DATABASE="G2"
+    export SENZING_DATA_MART_POSTGRESQL_USER="postgres"
+    export SENZING_DATA_MART_POSTGRESQL_PASSWORD="postgres"
+    ```
+
 ### Run Docker container
 
 1. Run Docker container.
    Example:
 
     ```console
-    docker run \
+   docker run \
       --env SENZING_ENGINE_CONFIGURATION_JSON \
+      --env SENZING_DATA_MART_POSTGRESQL_HOST \
+      --env SENZING_DATA_MART_POSTGRESQL_PORT \
+      --env SENZING_DATA_MART_POSTGRESQL_DATABASE \
+      --env SENZING_DATA_MART_POSTGRESQL_USER \
+      --env SENZING_DATA_MART_POSTGRESQL_PASSWORD \
       --publish 8250:8250 \
       --publish 8251:8251 \
       --rm \
