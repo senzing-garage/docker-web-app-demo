@@ -10,26 +10,17 @@ permissions:
   contents: read
 
 jobs:
-  docker-build-container-amd:
+  docker-build-container:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clear space for docker build
+        run: |
+          rm -rf /opt/hostedtoolcache
+
       - name: build docker image
         uses: senzing-factory/github-action-docker-buildx-build@v2
         with:
           image-repository: senzing/web-app-demo
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-          platforms: linux/amd64
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-
-  docker-build-container-arm:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: build docker image
-        uses: senzing-factory/github-action-docker-buildx-build@v2
-        with:
-          image-repository: senzing/web-app-demo
-          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-          platforms: linux/arm64
           username: ${{ secrets.DOCKERHUB_USERNAME }}
